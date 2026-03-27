@@ -160,10 +160,9 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(0,0,0,0.96); }
   display: flex; align-items: center; justify-content: space-between;
 }
 .nav-logo {
-  font-family: var(--font-main); font-weight: 900; font-size: 1.4rem;
-  color: var(--paid-white); text-decoration: none; letter-spacing: -0.02em;
+  text-decoration: none;
+  display: flex; align-items: center;
 }
-.nav-logo .hash { color: var(--paid-accent); }
 .nav-links { display: flex; gap: 1.75rem; align-items: center; }
 .nav-links a {
   color: rgba(255,255,255,0.4); text-decoration: none;
@@ -772,7 +771,7 @@ footer a:hover { color: var(--paid-accent); }
 
 <!-- LOADER -->
 <div class="loader" id="loader">
-  <div class="loader-logo"><span class="hash">#</span>paid</div>
+  <div class="loader-logo"><img src="logo.jpg" alt="#paid" style="height:40px;width:auto;filter:brightness(0) invert(1);"></div>
   <div class="loader-sub">Kenvue Strategic Proposal</div>
   <div class="loader-bar-track"><div class="loader-bar"></div></div>
 </div>
@@ -790,7 +789,7 @@ footer a:hover { color: var(--paid-accent); }
 <!-- NAV -->
 <nav id="nav">
   <div class="nav-inner">
-    <a href="#" class="nav-logo magnetic-btn"><span class="hash">#</span>paid</a>
+    <a href="#" class="nav-logo magnetic-btn"><img src="logo.jpg" alt="#paid" style="height:28px;width:auto;display:block;filter:brightness(0) invert(1);"></a>
     <div class="nav-links">
       <a href="#heard">Context</a>
       <a href="#cases">Proof</a>
