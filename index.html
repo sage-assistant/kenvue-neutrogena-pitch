@@ -9,17 +9,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-/*
-  ═════════════════════════════════════════
-  #paid Brand System
-  Cream:   #f2f0eb
-  Accent:  #dde041 (Yellow-Green)
-  Green:   #11bf62
-  Dark:    #000 / #121212
-  Font:    Inter (Maison Neue substitute)
-  DM Mono for labels/code
-  ═════════════════════════════════════════
-*/
+/* ══════════════════════════════════════════════
+   #paid Brand System — Immersive Proposal
+   ══════════════════════════════════════════════ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
@@ -41,6 +33,7 @@
   --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'DM Mono', 'SF Mono', monospace;
   --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -51,23 +44,119 @@ body {
   background: var(--paid-cream);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  cursor: none;
 }
-.container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 img { max-width: 100%; display: block; }
+a, button { cursor: none; }
 
-/* ═══════════════ NAV ═══════════════ */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  padding: 1rem 2rem;
-  background: rgba(0, 0, 0, 0.92);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  transition: all 0.3s var(--ease);
+/* ══════════ LOADING SCREEN ══════════ */
+.loader {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--paid-black);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 2rem;
+  transition: opacity 0.6s var(--ease), visibility 0.6s;
 }
-nav.scrolled { padding: 0.6rem 2rem; background: rgba(0, 0, 0, 0.97); }
+.loader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+.loader-logo {
+  font-family: var(--font-main); font-weight: 900;
+  font-size: 2.5rem; color: var(--paid-white);
+  letter-spacing: -0.03em;
+  opacity: 0; animation: loaderFadeIn 0.5s 0.2s var(--ease) forwards;
+}
+.loader-logo .hash { color: var(--paid-accent); }
+.loader-bar-track {
+  width: 200px; height: 2px; background: rgba(255,255,255,0.1);
+  border-radius: 2px; overflow: hidden;
+  opacity: 0; animation: loaderFadeIn 0.5s 0.4s var(--ease) forwards;
+}
+.loader-bar {
+  height: 100%; width: 0; background: var(--paid-accent);
+  border-radius: 2px; animation: loaderFill 1.8s 0.6s var(--ease-out) forwards;
+}
+@keyframes loaderFadeIn { to { opacity: 1; } }
+@keyframes loaderFill { to { width: 100%; } }
+
+/* ══════════ CUSTOM CURSOR ══════════ */
+.cursor-dot {
+  position: fixed; top: 0; left: 0; z-index: 10000;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--paid-accent);
+  pointer-events: none;
+  transition: transform 0.1s, opacity 0.3s;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  position: fixed; top: 0; left: 0; z-index: 9999;
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1.5px solid rgba(221,224,65,0.4);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s var(--ease), height 0.3s var(--ease), border-color 0.3s;
+}
+.cursor-ring.hovering {
+  width: 56px; height: 56px;
+  border-color: var(--paid-accent);
+  background: rgba(221,224,65,0.06);
+}
+@media (max-width: 768px) { .cursor-dot, .cursor-ring { display: none; } body { cursor: auto; } a, button { cursor: pointer; } }
+
+/* ══════════ SCROLL PROGRESS ══════════ */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; z-index: 200;
+  height: 3px; background: var(--paid-accent);
+  width: 0%; transition: none;
+  box-shadow: 0 0 10px rgba(221,224,65,0.5);
+}
+
+/* ══════════ SIDE NAV DOTS ══════════ */
+.side-nav {
+  position: fixed; right: 2rem; top: 50%;
+  transform: translateY(-50%); z-index: 150;
+  display: flex; flex-direction: column; gap: 1rem;
+}
+.side-nav-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  border: 1.5px solid rgba(0,0,0,0.2);
+  background: transparent;
+  transition: all 0.3s var(--ease);
+  cursor: none; position: relative;
+}
+.side-nav-dot.active {
+  background: var(--paid-accent);
+  border-color: var(--paid-accent);
+  transform: scale(1.3);
+}
+.side-nav-dot.dark { border-color: rgba(255,255,255,0.3); }
+.side-nav-dot.dark.active { border-color: var(--paid-accent); }
+.side-nav-tooltip {
+  position: absolute; right: 24px; top: 50%;
+  transform: translateY(-50%); white-space: nowrap;
+  font-family: var(--font-mono); font-size: 0.6rem;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  background: var(--paid-black); color: var(--paid-white);
+  padding: 0.3rem 0.6rem; border-radius: 4px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s;
+}
+.side-nav-dot:hover .side-nav-tooltip { opacity: 1; }
+@media (max-width: 900px) { .side-nav { display: none; } }
+
+/* ══════════ NAV ══════════ */
+nav {
+  position: fixed; top: 3px; left: 0; right: 0; z-index: 100;
+  padding: 1rem 2rem;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: all 0.4s var(--ease);
+}
+nav.scrolled { padding: 0.6rem 2rem; background: rgba(0, 0, 0, 0.96); }
 .nav-inner {
-  max-width: 1160px; margin: 0 auto;
+  max-width: 1200px; margin: 0 auto;
   display: flex; align-items: center; justify-content: space-between;
 }
 .nav-logo {
@@ -80,41 +169,46 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(0, 0, 0, 0.97); }
 .nav-logo .hash { color: var(--paid-accent); }
 .nav-links { display: flex; gap: 1.75rem; align-items: center; }
 .nav-links a {
-  color: rgba(255,255,255,0.5); text-decoration: none;
-  font-size: 0.85rem; font-weight: 500;
-  transition: color 0.2s;
+  color: rgba(255,255,255,0.45); text-decoration: none;
+  font-size: 0.82rem; font-weight: 500;
+  transition: color 0.25s; position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1.5px; background: var(--paid-accent);
+  transition: width 0.3s var(--ease);
 }
 .nav-links a:hover { color: var(--paid-white); }
+.nav-links a:hover::after { width: 100%; }
 .nav-cta-btn {
   background: var(--paid-accent) !important; color: var(--paid-black) !important;
   padding: 0.5rem 1.25rem !important; border-radius: 100px;
   font-weight: 700 !important;
   transition: all 0.25s var(--ease) !important;
-  font-size: 0.85rem !important;
+  font-size: 0.82rem !important;
 }
-.nav-cta-btn:hover { background: var(--paid-accent-light) !important; transform: translateY(-1px); }
+.nav-cta-btn::after { display: none !important; }
+.nav-cta-btn:hover { background: var(--paid-accent-light) !important; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(221,224,65,0.3); }
 @media (max-width: 768px) { .nav-links { display: none; } }
 
-/* ═══════════════ HERO ═══════════════ */
+/* ══════════ HERO ══════════ */
 .hero {
   min-height: 100vh; display: flex; align-items: center;
   background: var(--paid-black); position: relative; overflow: hidden;
   padding-top: 5rem;
 }
-.hero-bg-img {
-  position: absolute; inset: 0;
-  background: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=1920&q=80') center/cover;
-  opacity: 0.08; filter: saturate(0.3);
+#hero-canvas {
+  position: absolute; inset: 0; z-index: 1;
 }
 .hero-gradient {
-  position: absolute; inset: 0;
+  position: absolute; inset: 0; z-index: 2;
   background:
-    radial-gradient(ellipse 80% 70% at 60% 40%, rgba(221, 224, 65, 0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 50% at 10% 80%, rgba(17, 191, 98, 0.04) 0%, transparent 50%);
+    radial-gradient(ellipse 80% 60% at 65% 35%, rgba(221, 224, 65, 0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 10% 80%, rgba(17, 191, 98, 0.03) 0%, transparent 50%);
 }
 .hero-inner {
-  position: relative; z-index: 2;
-  max-width: 1160px; margin: 0 auto; padding: 6rem 2rem 5rem;
+  position: relative; z-index: 3;
+  max-width: 1200px; margin: 0 auto; padding: 6rem 2rem 5rem;
   display: grid; grid-template-columns: 1.2fr 0.8fr;
   gap: 4rem; align-items: center;
 }
@@ -122,75 +216,93 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(0, 0, 0, 0.97); }
   .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
 }
 .hero-eyebrow {
-  font-family: var(--font-mono); font-size: 0.65rem;
-  color: rgba(255,255,255,0.35); text-transform: uppercase;
-  letter-spacing: 0.15em; margin-bottom: 0.75rem;
-  animation: fadeUp 0.6s var(--ease) both;
+  font-family: var(--font-mono); font-size: 0.6rem;
+  color: rgba(255,255,255,0.3); text-transform: uppercase;
+  letter-spacing: 0.18em; margin-bottom: 0.75rem;
 }
 .hero-tag {
   display: inline-flex; align-items: center; gap: 0.5rem;
-  font-family: var(--font-mono); font-size: 0.7rem;
+  font-family: var(--font-mono); font-size: 0.65rem;
   color: var(--paid-accent); text-transform: uppercase;
   letter-spacing: 0.12em; margin-bottom: 1.5rem;
-  animation: fadeUp 0.6s var(--ease) both;
 }
-.hero-tag .line { width: 24px; height: 1px; background: var(--paid-accent); }
+.hero-tag .line { width: 28px; height: 1px; background: var(--paid-accent); }
 .hero h1 {
-  font-size: clamp(2.5rem, 5.5vw, 4.25rem);
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
   font-weight: 900; line-height: 1.02;
-  letter-spacing: -0.04em; color: var(--paid-white);
+  letter-spacing: -0.045em; color: var(--paid-white);
   margin-bottom: 1.5rem;
-  animation: fadeUp 0.6s 0.1s var(--ease) both;
 }
 .hero h1 .accent { color: var(--paid-accent); }
 .hero h1 .green { color: var(--paid-green); }
+
+/* Text reveal animation */
+.reveal-word {
+  display: inline-block;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+}
+.reveal-word.visible { opacity: 1; transform: translateY(0); }
+
 .hero-desc {
-  font-size: 1.1rem; color: rgba(255,255,255,0.5);
-  line-height: 1.7; max-width: 520px; margin-bottom: 2.5rem;
-  animation: fadeUp 0.6s 0.2s var(--ease) both;
+  font-size: 1.05rem; color: rgba(255,255,255,0.45);
+  line-height: 1.75; max-width: 520px; margin-bottom: 2.5rem;
 }
 @media (max-width: 900px) { .hero-desc { margin: 0 auto 2.5rem; } }
 .hero-actions {
   display: flex; gap: 1rem; flex-wrap: wrap;
-  animation: fadeUp 0.6s 0.3s var(--ease) both;
 }
 @media (max-width: 900px) { .hero-actions { justify-content: center; } }
+
+/* Magnetic buttons */
 .btn {
   display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 0.9rem 2rem; border-radius: 100px;
+  padding: 0.95rem 2.25rem; border-radius: 100px;
   font-family: var(--font-main); font-size: 0.95rem; font-weight: 600;
-  text-decoration: none; transition: all 0.25s var(--ease);
-  cursor: pointer; border: none;
+  text-decoration: none; transition: all 0.3s var(--ease);
+  cursor: none; border: none; position: relative;
 }
 .btn-accent {
   background: var(--paid-accent); color: var(--paid-black);
 }
-.btn-accent:hover { background: var(--paid-accent-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(221,224,65,0.25); }
+.btn-accent:hover {
+  background: var(--paid-accent-light);
+  box-shadow: 0 8px 32px rgba(221,224,65,0.35);
+  transform: translateY(-2px);
+}
 .btn-outline {
   background: transparent; color: var(--paid-white);
-  border: 1.5px solid rgba(255,255,255,0.2);
+  border: 1.5px solid rgba(255,255,255,0.15);
 }
 .btn-outline:hover { border-color: rgba(255,255,255,0.5); transform: translateY(-2px); }
+.btn-dark-accent {
+  background: var(--paid-accent); color: var(--paid-black);
+}
+.btn-dark-outline {
+  background: transparent; color: var(--paid-dark);
+  border: 1.5px solid var(--paid-border);
+}
 
 /* Hero cards */
 .hero-cards {
   display: grid; grid-template-columns: 1fr 1fr;
-  gap: 0.75rem; animation: fadeUp 0.6s 0.4s var(--ease) both;
+  gap: 0.75rem;
 }
 .hero-card {
   border-radius: 14px; overflow: hidden;
   position: relative; aspect-ratio: 3/4;
-  transition: all 0.35s var(--ease);
+  transition: all 0.4s var(--ease);
 }
-.hero-card:hover { transform: translateY(-6px); }
+.hero-card:hover { transform: translateY(-8px) scale(1.02); }
 .hero-card:nth-child(2) { margin-top: 2rem; }
 .hero-card:nth-child(3) { margin-top: -1rem; }
-.hero-card img { width: 100%; height: 100%; object-fit: cover; }
+.hero-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
+.hero-card:hover img { transform: scale(1.05); }
 .hero-card-label {
   position: absolute; bottom: 0; left: 0; right: 0;
-  padding: 2.5rem 0.75rem 0.75rem;
-  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-  font-family: var(--font-mono); font-size: 0.6rem;
+  padding: 3rem 0.75rem 0.75rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+  font-family: var(--font-mono); font-size: 0.55rem;
   color: var(--paid-white); text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -198,10 +310,10 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(0, 0, 0, 0.97); }
   .hero-cards { max-width: 400px; margin: 0 auto; }
 }
 
-/* ═══════════════ TICKER ═══════════════ */
+/* ══════════ TICKER ══════════ */
 .ticker {
   background: var(--paid-black); padding: 0.75rem 0;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid rgba(255,255,255,0.04);
   overflow: hidden;
 }
 .ticker-track {
@@ -209,24 +321,29 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(0, 0, 0, 0.97); }
   width: max-content; align-items: center;
 }
 .ticker-item {
-  font-family: var(--font-mono); font-size: 0.7rem;
-  color: rgba(255,255,255,0.35); white-space: nowrap;
+  font-family: var(--font-mono); font-size: 0.65rem;
+  color: rgba(255,255,255,0.3); white-space: nowrap;
   text-transform: uppercase; letter-spacing: 0.08em;
 }
 .ticker-dot {
   width: 4px; height: 4px; border-radius: 50%;
-  background: var(--paid-accent); flex-shrink: 0; opacity: 0.5;
+  background: var(--paid-accent); flex-shrink: 0; opacity: 0.4;
 }
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-/* ═══════════════ SHARED ═══════════════ */
+/* ══════════ WAVE DIVIDERS ══════════ */
+.wave-divider { width: 100%; line-height: 0; overflow: hidden; }
+.wave-divider svg { display: block; width: 100%; height: auto; }
+.wave-divider.flip { transform: rotate(180deg); }
+
+/* ══════════ SHARED ══════════ */
 .tag {
-  font-family: var(--font-mono); font-size: 0.65rem;
-  text-transform: uppercase; letter-spacing: 0.12em;
+  font-family: var(--font-mono); font-size: 0.6rem;
+  text-transform: uppercase; letter-spacing: 0.14em;
   display: inline-flex; align-items: center; gap: 0.5rem;
   margin-bottom: 1rem;
 }
-.tag .line { width: 20px; height: 1px; }
+.tag .line { width: 22px; height: 1px; }
 .tag.accent { color: var(--paid-accent-text); }
 .tag.accent .line { background: var(--paid-accent); }
 .tag.green { color: var(--paid-green); }
@@ -239,31 +356,69 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(0, 0, 0, 0.97); }
 }
 .sec-desc {
   font-size: 1.05rem; color: var(--paid-gray);
-  line-height: 1.7; max-width: 560px;
+  line-height: 1.75; max-width: 560px;
 }
 
-/* ═══════════════ PROBLEM ═══════════════ */
-.problem { padding: 6rem 0; background: var(--paid-cream); }
+/* ══════════ SCROLL ANIMATIONS ══════════ */
+.fade-in {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+.fade-in-left {
+  opacity: 0; transform: translateX(-40px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+.fade-in-left.visible { opacity: 1; transform: translateX(0); }
+.fade-in-right {
+  opacity: 0; transform: translateX(40px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+.fade-in-right.visible { opacity: 1; transform: translateX(0); }
+.scale-in {
+  opacity: 0; transform: scale(0.92);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+.scale-in.visible { opacity: 1; transform: scale(1); }
+.s1 { transition-delay: 0.08s; } .s2 { transition-delay: 0.16s; }
+.s3 { transition-delay: 0.24s; } .s4 { transition-delay: 0.32s; }
+.s5 { transition-delay: 0.4s; } .s6 { transition-delay: 0.48s; }
+
+/* ══════════ 3D TILT CARDS ══════════ */
+.tilt-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: box-shadow 0.3s var(--ease);
+}
+.tilt-card:hover {
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+}
+.tilt-card-dark:hover {
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+/* ══════════ PROBLEM ══════════ */
+.problem { padding: 7rem 0; background: var(--paid-cream); }
 .problem-top {
   display: grid; grid-template-columns: 1fr 1fr;
-  gap: 4rem; align-items: center; margin-bottom: 4rem;
+  gap: 4rem; align-items: center; margin-bottom: 4.5rem;
 }
 @media (max-width: 768px) { .problem-top { grid-template-columns: 1fr; gap: 2rem; } }
 
 .problem-img-wrap {
-  position: relative; border-radius: 16px; overflow: hidden;
+  position: relative; border-radius: 20px; overflow: hidden;
 }
 .problem-img-wrap img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
 .problem-img-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.2) 100%);
-  display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem;
+  background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%);
+  display: flex; flex-direction: column; justify-content: flex-end; padding: 2.5rem;
 }
 .problem-img-stat {
-  font-size: 4rem; font-weight: 900; color: var(--paid-accent);
+  font-size: 5rem; font-weight: 900; color: var(--paid-accent);
   letter-spacing: -0.04em; line-height: 1;
 }
-.problem-img-label { font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-top: 0.5rem; }
+.problem-img-label { font-size: 0.9rem; color: rgba(255,255,255,0.75); margin-top: 0.5rem; line-height: 1.5; }
 
 .problem-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
@@ -272,54 +427,54 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(0, 0, 0, 0.97); }
 
 .p-card {
   background: var(--paid-white); border: 1px solid var(--paid-border);
-  border-radius: 14px; overflow: hidden;
-  transition: all 0.3s var(--ease);
+  border-radius: 16px; overflow: hidden;
+  transition: all 0.35s var(--ease);
 }
-.p-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.06); border-color: var(--paid-accent); }
-.p-card img { width: 100%; height: 160px; object-fit: cover; }
-.p-card-body { padding: 1.5rem; }
+.p-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.07); border-color: var(--paid-accent); }
+.p-card img { width: 100%; height: 180px; object-fit: cover; transition: transform 0.5s var(--ease); }
+.p-card:hover img { transform: scale(1.05); }
+.p-card-body { padding: 1.75rem; }
 .p-card h3 { font-size: 1rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
-.p-card p { font-size: 0.875rem; color: var(--paid-gray); line-height: 1.6; }
+.p-card p { font-size: 0.85rem; color: var(--paid-gray); line-height: 1.65; }
 
-/* ═══════════════ DATA ═══════════════ */
-.data { padding: 6rem 0; background: var(--paid-black); position: relative; }
-.data .tag { color: var(--paid-accent); }
-.data .tag .line { background: var(--paid-accent); }
-.data .sec-title { color: var(--paid-white); }
-.data .sec-desc { color: rgba(255,255,255,0.5); }
-
+/* ══════════ DATA ══════════ */
+.data { padding: 7rem 0; background: var(--paid-black); position: relative; }
 .data-layout {
   display: grid; grid-template-columns: 1fr 1fr;
-  gap: 3rem; align-items: center; margin-bottom: 3.5rem;
+  gap: 3.5rem; align-items: center; margin-bottom: 4rem;
 }
 @media (max-width: 768px) { .data-layout { grid-template-columns: 1fr; } }
 
 .chart-box {
-  background: rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 16px; padding: 2rem;
+  border-radius: 20px; padding: 2.5rem;
+  backdrop-filter: blur(10px);
 }
 .chart-label {
-  font-family: var(--font-mono); font-size: 0.6rem;
-  text-transform: uppercase; letter-spacing: 0.12em;
-  color: rgba(255,255,255,0.4); margin-bottom: 1.5rem;
-}
-.chart-bars { display: flex; gap: 1rem; align-items: flex-end; height: 180px; }
-.bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.4rem; height: 100%; justify-content: flex-end; }
-.bar {
-  width: 100%; border-radius: 6px 6px 2px 2px; min-height: 12px;
-  transition: height 1s var(--ease);
-}
-.bar.muted { background: rgba(255,255,255,0.15); }
-.bar.green { background: var(--paid-green); }
-.bar.accent { background: var(--paid-accent); }
-.bar-val {
-  font-family: var(--font-mono); font-size: 0.75rem;
-  font-weight: 500; color: var(--paid-white);
-}
-.bar-lbl {
   font-family: var(--font-mono); font-size: 0.55rem;
-  color: rgba(255,255,255,0.4); text-align: center;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.35); margin-bottom: 2rem;
+}
+.chart-bars { display: flex; gap: 1.25rem; align-items: flex-end; height: 200px; }
+.bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; height: 100%; justify-content: flex-end; }
+.bar {
+  width: 100%; border-radius: 8px 8px 3px 3px; min-height: 8px;
+  transition: height 1.2s var(--ease-out);
+}
+.bar[data-animated="false"] { height: 8px !important; }
+.bar.muted { background: rgba(255,255,255,0.12); }
+.bar.green { background: linear-gradient(to top, var(--paid-green-dark), var(--paid-green-light)); }
+.bar.accent { background: linear-gradient(to top, var(--paid-accent-dark), var(--paid-accent-light)); }
+.bar-val {
+  font-family: var(--font-mono); font-size: 0.8rem;
+  font-weight: 500; color: var(--paid-white);
+  opacity: 0; transition: opacity 0.5s 0.8s;
+}
+.bar-val.visible { opacity: 1; }
+.bar-lbl {
+  font-family: var(--font-mono); font-size: 0.5rem;
+  color: rgba(255,255,255,0.35); text-align: center;
   text-transform: uppercase; letter-spacing: 0.05em;
 }
 
@@ -332,95 +487,103 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(0, 0, 0, 0.97); }
 .stat {
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 14px; padding: 1.75rem; text-align: center;
-  transition: all 0.3s var(--ease);
+  border-radius: 16px; padding: 2rem; text-align: center;
+  transition: all 0.35s var(--ease);
+  backdrop-filter: blur(10px);
 }
-.stat:hover { background: rgba(255,255,255,0.06); transform: translateY(-3px); }
+.stat:hover { background: rgba(255,255,255,0.06); transform: translateY(-4px); border-color: rgba(221,224,65,0.2); }
 .stat-num {
-  font-size: 2.5rem; font-weight: 900;
-  letter-spacing: -0.04em; margin-bottom: 0.4rem;
+  font-size: 2.75rem; font-weight: 900;
+  letter-spacing: -0.04em; margin-bottom: 0.5rem;
 }
 .stat-num.accent { color: var(--paid-accent); }
 .stat-num.green { color: var(--paid-green); }
 .stat-num.white { color: var(--paid-white); }
-.stat-text { font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.5; }
+.stat-text { font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.55; }
 .stat-src {
-  font-family: var(--font-mono); font-size: 0.6rem;
-  color: rgba(255,255,255,0.25); margin-top: 0.4rem;
-  font-style: normal;
+  font-family: var(--font-mono); font-size: 0.55rem;
+  color: rgba(255,255,255,0.2); margin-top: 0.5rem;
 }
 
-/* ═══════════════ QUOTE BREAK ═══════════════ */
+/* ══════════ GLASSMORPHISM QUOTE ══════════ */
 .quote-break {
-  position: relative; min-height: 45vh; overflow: hidden;
+  position: relative; min-height: 50vh; overflow: hidden;
   display: flex; align-items: center; justify-content: center;
 }
-.quote-break img {
+.quote-break-bg {
   position: absolute; inset: 0;
-  width: 100%; height: 100%; object-fit: cover;
-  filter: brightness(0.3) saturate(1.2);
+  background-size: cover; background-position: center;
+  background-attachment: fixed;
+  filter: brightness(0.25) saturate(1.3);
 }
 .quote-inner {
   position: relative; z-index: 2; text-align: center;
-  padding: 3rem 2rem; max-width: 700px;
+  padding: 3.5rem 2.5rem; max-width: 700px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 .quote-inner blockquote {
-  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-  font-weight: 700; color: var(--paid-white);
-  line-height: 1.35; letter-spacing: -0.02em;
+  font-size: clamp(1.15rem, 2.5vw, 1.6rem);
+  font-weight: 600; color: var(--paid-white);
+  line-height: 1.45; letter-spacing: -0.015em;
   font-style: normal;
 }
 .quote-inner cite {
-  display: block; margin-top: 1.25rem;
-  font-family: var(--font-mono); font-size: 0.7rem;
+  display: block; margin-top: 1.5rem;
+  font-family: var(--font-mono); font-size: 0.65rem;
   color: var(--paid-accent); font-style: normal;
-  text-transform: uppercase; letter-spacing: 0.1em;
+  text-transform: uppercase; letter-spacing: 0.12em;
 }
 
-/* ═══════════════ SOLUTION / PILLARS ═══════════════ */
-.solution { padding: 6rem 0; background: var(--paid-cream); }
-.solution-header { text-align: center; max-width: 680px; margin: 0 auto 4rem; }
+/* ══════════ SOLUTION / PILLARS ══════════ */
+.solution { padding: 7rem 0; background: var(--paid-cream); }
+.solution-header { text-align: center; max-width: 680px; margin: 0 auto 4.5rem; }
 .solution-header .sec-desc { margin: 0 auto; }
 
-.pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
 @media (max-width: 768px) { .pillars { grid-template-columns: 1fr; } }
 
 .pillar {
   background: var(--paid-white); border: 1px solid var(--paid-border);
-  border-radius: 16px; overflow: hidden;
-  transition: all 0.35s var(--ease);
+  border-radius: 20px; overflow: hidden;
+  transition: all 0.4s var(--ease);
 }
-.pillar:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.06); }
-.pillar-img { width: 100%; height: 200px; object-fit: cover; }
-.pillar-body { padding: 1.75rem; }
+.pillar:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,0.07); }
+.pillar-img-wrap { overflow: hidden; }
+.pillar-img { width: 100%; height: 220px; object-fit: cover; transition: transform 0.6s var(--ease); }
+.pillar:hover .pillar-img { transform: scale(1.06); }
+.pillar-body { padding: 2rem; }
 .pillar-num {
-  font-family: var(--font-mono); font-size: 0.6rem;
-  text-transform: uppercase; letter-spacing: 0.12em;
+  font-family: var(--font-mono); font-size: 0.55rem;
+  text-transform: uppercase; letter-spacing: 0.14em;
   margin-bottom: 0.75rem;
 }
 .pillar-num.accent { color: var(--paid-accent-text); }
 .pillar-num.green { color: var(--paid-green); }
 .pillar h3 {
-  font-size: 1.25rem; font-weight: 800;
+  font-size: 1.2rem; font-weight: 800;
   letter-spacing: -0.02em; margin-bottom: 0.75rem;
 }
-.pillar p { font-size: 0.875rem; color: var(--paid-gray); line-height: 1.65; margin-bottom: 1.25rem; }
+.pillar p { font-size: 0.85rem; color: var(--paid-gray); line-height: 1.7; margin-bottom: 1.25rem; }
 .pillar-list { list-style: none; }
 .pillar-list li {
   font-size: 0.8rem; color: var(--paid-gray);
-  padding: 0.35rem 0; padding-left: 1rem; position: relative;
-  line-height: 1.5;
+  padding: 0.4rem 0; padding-left: 1.1rem; position: relative;
+  line-height: 1.55;
 }
 .pillar-list li::before {
-  content: ''; position: absolute; left: 0; top: 0.65rem;
+  content: ''; position: absolute; left: 0; top: 0.7rem;
   width: 5px; height: 5px; border-radius: 50%;
 }
 .pillar:nth-child(1) .pillar-list li::before { background: var(--paid-accent); }
 .pillar:nth-child(2) .pillar-list li::before { background: var(--paid-green); }
 .pillar:nth-child(3) .pillar-list li::before { background: var(--paid-accent); }
 
-/* ═══════════════ HANDRAISE ═══════════════ */
-.handraise { padding: 6rem 0; background: var(--paid-white); border-top: 1px solid var(--paid-border); }
+/* ══════════ HANDRAISE ══════════ */
+.handraise { padding: 7rem 0; background: var(--paid-white); border-top: 1px solid var(--paid-border); }
 .handraise-grid {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 4rem; align-items: center;
@@ -428,44 +591,45 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(0, 0, 0, 0.97); }
 @media (max-width: 768px) { .handraise-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
 
 .hr-visual {
-  background: var(--paid-black); border-radius: 16px; overflow: hidden;
+  background: var(--paid-black); border-radius: 20px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.06);
 }
-.hr-visual-img { width: 100%; height: 180px; object-fit: cover; filter: brightness(0.6) saturate(1.1); }
-.hr-mock { padding: 1.75rem; }
+.hr-visual-img { width: 100%; height: 200px; object-fit: cover; filter: brightness(0.55) saturate(1.1); }
+.hr-mock { padding: 2rem; }
 .hr-mock-header {
   display: flex; align-items: center; gap: 0.75rem;
-  padding-bottom: 1rem; margin-bottom: 1rem;
+  padding-bottom: 1.25rem; margin-bottom: 1.25rem;
   border-bottom: 1px solid rgba(255,255,255,0.06);
 }
-.hr-avatar { width: 40px; height: 40px; border-radius: 10px; overflow: hidden; }
+.hr-avatar { width: 44px; height: 44px; border-radius: 12px; overflow: hidden; }
 .hr-avatar img { width: 100%; height: 100%; object-fit: cover; }
 .hr-name { font-weight: 700; color: var(--paid-white); font-size: 0.9rem; }
 .hr-handle { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
-.hr-quote { font-size: 0.85rem; color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 1rem; }
+.hr-quote { font-size: 0.85rem; color: rgba(255,255,255,0.6); line-height: 1.75; margin-bottom: 1.25rem; }
 .hr-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
 .hr-tag {
-  padding: 0.2rem 0.6rem; border-radius: 100px;
-  font-family: var(--font-mono); font-size: 0.55rem;
+  padding: 0.25rem 0.65rem; border-radius: 100px;
+  font-family: var(--font-mono); font-size: 0.5rem;
   text-transform: uppercase; letter-spacing: 0.06em;
 }
-.hr-tag.accent { background: rgba(221,224,65,0.15); color: var(--paid-accent); }
-.hr-tag.green { background: rgba(17,191,98,0.15); color: var(--paid-green-light); }
+.hr-tag.accent { background: rgba(221,224,65,0.12); color: var(--paid-accent); }
+.hr-tag.green { background: rgba(17,191,98,0.12); color: var(--paid-green-light); }
 .hr-stats {
-  display: flex; gap: 1.5rem; padding-top: 1rem;
+  display: flex; gap: 1.75rem; padding-top: 1.25rem;
   border-top: 1px solid rgba(255,255,255,0.06);
 }
-.hr-stat-val { font-weight: 800; color: var(--paid-white); font-size: 1rem; }
+.hr-stat-val { font-weight: 800; color: var(--paid-white); font-size: 1.05rem; }
 .hr-stat-lbl {
-  font-family: var(--font-mono); font-size: 0.55rem;
-  color: rgba(255,255,255,0.35); text-transform: uppercase;
+  font-family: var(--font-mono); font-size: 0.5rem;
+  color: rgba(255,255,255,0.3); text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
 .hr-badge {
   display: inline-flex; align-items: center; gap: 0.5rem;
-  background: rgba(221,224,65,0.08); border: 1px solid rgba(221,224,65,0.2);
+  background: rgba(221,224,65,0.06); border: 1px solid rgba(221,224,65,0.15);
   padding: 0.4rem 0.9rem; border-radius: 100px;
-  font-family: var(--font-mono); font-size: 0.6rem;
+  font-family: var(--font-mono); font-size: 0.55rem;
   color: var(--paid-accent-text); text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -476,141 +640,155 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(0, 0, 0, 0.97); }
 }
 .hr-text > p {
   font-size: 0.95rem; color: var(--paid-gray);
-  line-height: 1.7; margin-bottom: 1.75rem;
+  line-height: 1.75; margin-bottom: 1.75rem;
 }
 .check-list { list-style: none; }
 .check-list li {
-  display: flex; align-items: flex-start; gap: 0.6rem;
-  padding: 0.45rem 0; font-size: 0.875rem;
-  color: var(--paid-dark); line-height: 1.5;
+  display: flex; align-items: flex-start; gap: 0.65rem;
+  padding: 0.5rem 0; font-size: 0.875rem;
+  color: var(--paid-dark); line-height: 1.55;
 }
 .check-icon {
-  flex-shrink: 0; width: 18px; height: 18px;
-  border-radius: 5px; background: rgba(221,224,65,0.2);
+  flex-shrink: 0; width: 20px; height: 20px;
+  border-radius: 6px; background: rgba(221,224,65,0.15);
   display: flex; align-items: center; justify-content: center;
-  margin-top: 3px;
+  margin-top: 2px;
 }
 .check-icon svg { width: 10px; height: 10px; }
 
-/* ═══════════════ USE CASES ═══════════════ */
-.use-cases-sec { padding: 6rem 0; background: var(--paid-cream); }
-.uc-header { text-align: center; max-width: 680px; margin: 0 auto 3.5rem; }
-.uc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+/* ══════════ USE CASES ══════════ */
+.use-cases-sec { padding: 7rem 0; background: var(--paid-cream); }
+.uc-header { text-align: center; max-width: 680px; margin: 0 auto 4rem; }
+.uc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
 @media (max-width: 768px) { .uc-grid { grid-template-columns: 1fr; } }
 
 .uc-card {
   background: var(--paid-white); border: 1px solid var(--paid-border);
-  border-radius: 14px; overflow: hidden;
-  transition: all 0.3s var(--ease);
+  border-radius: 18px; overflow: hidden;
+  transition: all 0.35s var(--ease);
 }
-.uc-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-color: var(--paid-accent); }
-.uc-card img { width: 100%; height: 180px; object-fit: cover; }
-.uc-card-body { padding: 1.5rem; }
-.uc-card h3 { font-size: 0.95rem; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 0.4rem; }
-.uc-card p { font-size: 0.825rem; color: var(--paid-gray); line-height: 1.6; }
+.uc-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.06); border-color: var(--paid-accent); }
+.uc-card-img-wrap { overflow: hidden; }
+.uc-card img { width: 100%; height: 200px; object-fit: cover; transition: transform 0.5s var(--ease); }
+.uc-card:hover img { transform: scale(1.05); }
+.uc-card-body { padding: 1.75rem; }
+.uc-card h3 { font-size: 0.95rem; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 0.5rem; }
+.uc-card p { font-size: 0.825rem; color: var(--paid-gray); line-height: 1.65; }
 
-/* ═══════════════ TIMELINE ═══════════════ */
-.timeline-sec { padding: 6rem 0; background: var(--paid-white); border-top: 1px solid var(--paid-border); }
-.tl-header { text-align: center; max-width: 680px; margin: 0 auto 3.5rem; }
+/* ══════════ TIMELINE ══════════ */
+.timeline-sec { padding: 7rem 0; background: var(--paid-white); border-top: 1px solid var(--paid-border); }
+.tl-header { text-align: center; max-width: 680px; margin: 0 auto 4rem; }
 
-.tl { position: relative; max-width: 780px; margin: 0 auto; }
-.tl::before {
-  content: ''; position: absolute; left: 50%; top: 0; bottom: 0;
-  width: 2px; background: var(--paid-border); transform: translateX(-50%);
+.tl { position: relative; max-width: 800px; margin: 0 auto; }
+.tl-line {
+  position: absolute; left: 50%; top: 0;
+  width: 2px; height: 0; background: var(--paid-accent);
+  transform: translateX(-50%);
+  transition: height 0.05s linear;
 }
-@media (max-width: 768px) { .tl::before { left: 20px; } }
+.tl-line-bg {
+  position: absolute; left: 50%; top: 0; bottom: 0;
+  width: 2px; background: var(--paid-border);
+  transform: translateX(-50%);
+}
+@media (max-width: 768px) { .tl-line, .tl-line-bg { left: 20px; } }
 
 .tl-item { display: flex; margin-bottom: 2.5rem; position: relative; }
 .tl-dot {
-  position: absolute; left: 50%; transform: translateX(-50%);
-  width: 14px; height: 14px; border-radius: 50%;
+  position: absolute; left: 50%; transform: translateX(-50%) scale(0);
+  width: 16px; height: 16px; border-radius: 50%;
   border: 3px solid var(--paid-white); z-index: 2;
+  transition: transform 0.4s var(--ease-bounce);
+  box-shadow: 0 0 0 4px rgba(221,224,65,0.15);
 }
-@media (max-width: 768px) { .tl-dot { left: 20px; } }
+.tl-dot.visible { transform: translateX(-50%) scale(1); }
+@media (max-width: 768px) { .tl-dot { left: 20px; } .tl-dot.visible { transform: translateX(-50%) scale(1); } }
 .tl-dot.accent { background: var(--paid-accent); }
-.tl-dot.green { background: var(--paid-green); }
+.tl-dot.green { background: var(--paid-green); box-shadow: 0 0 0 4px rgba(17,191,98,0.15); }
 
 .tl-card {
   width: 44%; background: var(--paid-cream);
   border: 1px solid var(--paid-border);
-  border-radius: 12px; padding: 1.5rem;
-  transition: all 0.3s var(--ease);
+  border-radius: 14px; padding: 1.75rem;
+  transition: all 0.35s var(--ease);
+  opacity: 0; transform: translateY(20px);
 }
-.tl-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.04); }
+.tl-card.visible { opacity: 1; transform: translateY(0); }
+.tl-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.04); border-color: var(--paid-accent); }
 .tl-item:nth-child(odd) .tl-card { margin-right: auto; }
 .tl-item:nth-child(even) .tl-card { margin-left: auto; }
 @media (max-width: 768px) {
   .tl-card { width: calc(100% - 50px); margin-left: 44px !important; margin-right: 0 !important; }
 }
 .tl-phase {
-  font-family: var(--font-mono); font-size: 0.55rem;
-  text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.4rem;
+  font-family: var(--font-mono); font-size: 0.5rem;
+  text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 0.4rem;
 }
 .tl-phase.accent { color: var(--paid-accent-text); }
 .tl-phase.green { color: var(--paid-green); }
-.tl-card h3 { font-size: 0.95rem; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 0.4rem; }
-.tl-card p { font-size: 0.8rem; color: var(--paid-gray); line-height: 1.6; }
+.tl-card h3 { font-size: 0.95rem; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 0.5rem; }
+.tl-card p { font-size: 0.8rem; color: var(--paid-gray); line-height: 1.65; }
 
-/* ═══════════════ COMPARISON ═══════════════ */
-.compare { padding: 6rem 0; background: var(--paid-black); }
-.compare .tag { color: var(--paid-accent); }
-.compare .tag .line { background: var(--paid-accent); }
-.compare .sec-title { color: var(--paid-white); text-align: center; }
-.compare .sec-desc { color: rgba(255,255,255,0.45); text-align: center; margin: 0 auto 3rem; }
+/* ══════════ COMPARISON ══════════ */
+.compare { padding: 7rem 0; background: var(--paid-black); }
+.compare-header { text-align: center; max-width: 680px; margin: 0 auto 3.5rem; }
 
-.cmp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 880px; margin: 0 auto; }
+.cmp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 920px; margin: 0 auto; }
 @media (max-width: 768px) { .cmp-grid { grid-template-columns: 1fr; } }
 
-.cmp-card { border-radius: 16px; padding: 2rem; }
+.cmp-card { border-radius: 20px; padding: 2.5rem; transition: all 0.35s var(--ease); }
+.cmp-card:hover { transform: translateY(-4px); }
 .cmp-card.old { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); }
+.cmp-card.old:hover { border-color: rgba(255,255,255,0.12); }
 .cmp-card.new {
   background: rgba(221,224,65,0.04); border: 1px solid rgba(221,224,65,0.15);
   position: relative;
 }
+.cmp-card.new:hover { border-color: rgba(221,224,65,0.35); box-shadow: 0 0 40px rgba(221,224,65,0.08); }
 .cmp-card.new::after {
-  content: 'RECOMMENDED'; position: absolute; top: -8px; right: 16px;
+  content: 'RECOMMENDED'; position: absolute; top: -10px; right: 20px;
   background: var(--paid-accent); color: var(--paid-black);
-  font-family: var(--font-mono); font-size: 0.5rem; font-weight: 700;
-  letter-spacing: 0.12em; padding: 0.25rem 0.6rem; border-radius: 4px;
+  font-family: var(--font-mono); font-size: 0.45rem; font-weight: 700;
+  letter-spacing: 0.14em; padding: 0.3rem 0.7rem; border-radius: 4px;
 }
-.cmp-card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 1.25rem; }
-.cmp-card.old h3 { color: rgba(255,255,255,0.4); }
+.cmp-card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 1.5rem; }
+.cmp-card.old h3 { color: rgba(255,255,255,0.35); }
 .cmp-card.new h3 { color: var(--paid-accent); }
 .cmp-list { list-style: none; }
 .cmp-list li {
-  padding: 0.45rem 0 0.45rem 1.25rem;
-  position: relative; font-size: 0.825rem; line-height: 1.5;
+  padding: 0.5rem 0 0.5rem 1.5rem;
+  position: relative; font-size: 0.825rem; line-height: 1.55;
 }
-.cmp-card.old .cmp-list li { color: rgba(255,255,255,0.35); }
+.cmp-card.old .cmp-list li { color: rgba(255,255,255,0.3); }
 .cmp-card.new .cmp-list li { color: rgba(255,255,255,0.6); }
 .cmp-list li::before { position: absolute; left: 0; font-size: 0.8rem; }
-.cmp-card.old .cmp-list li::before { content: '\2715'; color: rgba(255,255,255,0.2); }
+.cmp-card.old .cmp-list li::before { content: '\2715'; color: rgba(255,255,255,0.15); }
 .cmp-card.new .cmp-list li::before { content: '\2713'; color: var(--paid-green); }
 
-/* ═══════════════ ROI ═══════════════ */
-.roi { padding: 6rem 0; background: var(--paid-cream); }
-.roi-header { text-align: center; max-width: 680px; margin: 0 auto 3.5rem; }
-.roi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+/* ══════════ ROI ══════════ */
+.roi { padding: 7rem 0; background: var(--paid-cream); }
+.roi-header { text-align: center; max-width: 680px; margin: 0 auto 4rem; }
+.roi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
 @media (max-width: 768px) { .roi-grid { grid-template-columns: 1fr; } }
 
 .roi-card {
   background: var(--paid-white); border: 1px solid var(--paid-border);
-  border-radius: 16px; padding: 2.5rem 2rem; text-align: center;
-  transition: all 0.3s var(--ease);
+  border-radius: 20px; padding: 3rem 2rem; text-align: center;
+  transition: all 0.35s var(--ease);
 }
-.roi-card:hover { transform: translateY(-5px); box-shadow: 0 12px 35px rgba(0,0,0,0.05); }
+.roi-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.06); border-color: var(--paid-accent); }
 .roi-num {
-  font-size: 3rem; font-weight: 900;
+  font-size: 3.5rem; font-weight: 900;
   letter-spacing: -0.04em; margin-bottom: 0.75rem;
 }
 .roi-num.accent { color: var(--paid-accent-text); }
 .roi-num.green { color: var(--paid-green); }
-.roi-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
-.roi-card p { font-size: 0.825rem; color: var(--paid-gray); line-height: 1.6; }
+.roi-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -0.01em; }
+.roi-card p { font-size: 0.825rem; color: var(--paid-gray); line-height: 1.65; }
 
-/* ═══════════════ CTA ═══════════════ */
+/* ══════════ CTA ══════════ */
 .final-cta {
-  padding: 7rem 0; background: var(--paid-black);
+  padding: 8rem 0; background: var(--paid-black);
   text-align: center; position: relative; overflow: hidden;
 }
 .final-cta::before {
@@ -621,29 +799,29 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(0, 0, 0, 0.97); }
 }
 .final-cta .container { position: relative; z-index: 2; }
 .final-cta h2 {
-  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
   font-weight: 900; color: var(--paid-white);
-  line-height: 1.05; letter-spacing: -0.035em;
+  line-height: 1.05; letter-spacing: -0.04em;
   margin-bottom: 1.25rem;
 }
 .final-cta h2 .accent { color: var(--paid-accent); }
 .final-cta > .container > p {
-  font-size: 1.05rem; color: rgba(255,255,255,0.45);
-  line-height: 1.7; max-width: 560px; margin: 0 auto 2.5rem;
+  font-size: 1.05rem; color: rgba(255,255,255,0.4);
+  line-height: 1.75; max-width: 560px; margin: 0 auto 2.5rem;
 }
 .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 .cta-sig {
-  margin-top: 3rem; padding-top: 2rem;
+  margin-top: 3.5rem; padding-top: 2.5rem;
   border-top: 1px solid rgba(255,255,255,0.06);
 }
-.cta-sig .name { font-weight: 800; color: var(--paid-white); font-size: 1.05rem; margin-bottom: 0.2rem; }
-.cta-sig .role { color: rgba(255,255,255,0.45); font-size: 0.85rem; }
+.cta-sig .name { font-weight: 800; color: var(--paid-white); font-size: 1.1rem; margin-bottom: 0.25rem; }
+.cta-sig .role { color: rgba(255,255,255,0.4); font-size: 0.85rem; }
 .cta-sig .email {
   font-family: var(--font-mono); font-size: 0.75rem;
-  color: var(--paid-accent); margin-top: 0.4rem;
+  color: var(--paid-accent); margin-top: 0.5rem;
 }
 
-/* ═══════════════ FOOTER ═══════════════ */
+/* ══════════ FOOTER ══════════ */
 footer {
   padding: 1.5rem 0; background: var(--paid-black);
   border-top: 1px solid rgba(255,255,255,0.04);
@@ -652,75 +830,97 @@ footer .container {
   display: flex; justify-content: space-between;
   align-items: center; flex-wrap: wrap; gap: 1rem;
 }
-footer p { color: rgba(255,255,255,0.25); font-size: 0.75rem; }
+footer p { color: rgba(255,255,255,0.2); font-size: 0.75rem; }
 footer a {
-  color: rgba(255,255,255,0.35); text-decoration: none;
+  color: rgba(255,255,255,0.3); text-decoration: none;
   font-size: 0.75rem; font-family: var(--font-mono);
 }
 footer a:hover { color: var(--paid-accent); }
 
-/* ═══════════════ ANIMATIONS ═══════════════ */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+/* ══════════ PRINT ══════════ */
+@media print {
+  .loader, .cursor-dot, .cursor-ring, .scroll-progress, .side-nav, nav, .ticker, #hero-canvas, .wave-divider { display: none !important; }
+  body { cursor: auto; background: white; color: black; }
+  .hero { min-height: auto; padding: 2rem 0; background: white; }
+  .hero h1, .hero h1 .accent { color: black; }
+  .hero-desc { color: #555; }
+  .hero-cards { display: none; }
+  .data, .compare, .final-cta { background: #f5f5f5; color: black; }
+  .data .sec-title, .compare .sec-title, .final-cta h2 { color: black; }
+  .stat-num, .bar-val, .stat-text { color: black !important; }
+  .quote-break { min-height: auto; padding: 2rem; background: #f0f0f0; }
+  .quote-break-bg { display: none; }
+  .quote-inner { background: none; border: none; backdrop-filter: none; }
+  .quote-inner blockquote { color: black; }
+  .quote-inner cite { color: #555; }
+  .fade-in, .fade-in-left, .fade-in-right, .scale-in, .tl-card, .reveal-word { opacity: 1 !important; transform: none !important; }
+  .tl-dot { transform: translateX(-50%) scale(1) !important; }
+  section { break-inside: avoid; }
 }
-.fade-in {
-  opacity: 0; transform: translateY(24px);
-  transition: all 0.6s var(--ease);
-}
-.fade-in.visible { opacity: 1; transform: translateY(0); }
-.s1 { transition-delay: 0.08s; }
-.s2 { transition-delay: 0.16s; }
-.s3 { transition-delay: 0.24s; }
-.s4 { transition-delay: 0.32s; }
 </style>
 </head>
 <body>
 
+<!-- LOADING SCREEN -->
+<div class="loader" id="loader">
+  <div class="loader-logo"><span class="hash">#</span>paid</div>
+  <div class="loader-bar-track"><div class="loader-bar"></div></div>
+</div>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- SCROLL PROGRESS -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- SIDE NAV DOTS -->
+<div class="side-nav" id="sideNav"></div>
+
 <!-- NAV -->
 <nav id="nav">
   <div class="nav-inner">
-    <a href="#" class="nav-logo"><span class="hash">#</span>paid</a>
+    <a href="#" class="nav-logo magnetic-btn"><span class="hash">#</span>paid</a>
     <div class="nav-links">
       <a href="#problem">The Shift</a>
       <a href="#solution">Framework</a>
       <a href="#timeline">Rollout</a>
       <a href="#roi">Impact</a>
-      <a href="#cta" class="nav-cta-btn">Let's Talk</a>
+      <a href="#cta" class="nav-cta-btn magnetic-btn">Let's Talk</a>
     </div>
   </div>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-bg-img"></div>
+<section class="hero" data-section="hero" data-nav-label="Home" data-nav-dark="true">
+  <canvas id="hero-canvas"></canvas>
   <div class="hero-gradient"></div>
   <div class="hero-inner">
     <div>
-      <div class="hero-eyebrow">#paid / Confidential Strategy Document</div>
-      <div class="hero-tag"><span class="line"></span> Strategic Proposal / Q2 2026</div>
-      <h1>Always On<br><span class="accent">Creator Infrastructure</span><br>for Neutrogena</h1>
-      <p class="hero-desc">Skincare trust isn't built in campaigns. It's built in conversations. Here's how #paid powers Neutrogena's creator engine to run 365 days a year, reclaiming category authority through authentic, science backed voices.</p>
-      <div class="hero-actions">
-        <a href="#solution" class="btn btn-accent">See the Framework &rarr;</a>
-        <a href="#data" class="btn btn-outline">Why Now &rarr;</a>
+      <div class="hero-eyebrow fade-in">#paid / Confidential Strategy Document</div>
+      <div class="hero-tag fade-in s1"><span class="line"></span> Strategic Proposal / Q2 2026</div>
+      <h1 class="reveal-text">Always On<br><span class="accent">Creator Infrastructure</span><br>for Neutrogena</h1>
+      <p class="hero-desc fade-in s2">Skincare trust isn't built in campaigns. It's built in conversations. Here's how #paid powers Neutrogena's creator engine to run 365 days a year, reclaiming category authority through authentic, science backed voices.</p>
+      <div class="hero-actions fade-in s3">
+        <a href="#solution" class="btn btn-accent magnetic-btn">See the Framework &rarr;</a>
+        <a href="#data" class="btn btn-outline magnetic-btn">Why Now &rarr;</a>
       </div>
     </div>
     <div class="hero-cards">
-      <div class="hero-card">
-        <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&h=530&fit=crop" alt="Skincare">
+      <div class="hero-card fade-in s2">
+        <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&h=530&fit=crop" alt="Skincare" loading="lazy">
         <div class="hero-card-label">Skincare Science</div>
       </div>
-      <div class="hero-card">
-        <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=400&h=530&fit=crop" alt="Creator">
+      <div class="hero-card fade-in s3">
+        <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=400&h=530&fit=crop" alt="Creator" loading="lazy">
         <div class="hero-card-label">Creator Content</div>
       </div>
-      <div class="hero-card">
-        <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=400&h=530&fit=crop" alt="Derm">
+      <div class="hero-card fade-in s4">
+        <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=400&h=530&fit=crop" alt="Derm" loading="lazy">
         <div class="hero-card-label">Derm Authority</div>
       </div>
-      <div class="hero-card">
-        <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400&h=530&fit=crop" alt="Products">
+      <div class="hero-card fade-in s5">
+        <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400&h=530&fit=crop" alt="Products" loading="lazy">
         <div class="hero-card-label">Product Stories</div>
       </div>
     </div>
@@ -750,41 +950,41 @@ footer a:hover { color: var(--paid-accent); }
 </div>
 
 <!-- PROBLEM -->
-<section class="problem" id="problem">
+<section class="problem" id="problem" data-section="problem" data-nav-label="The Shift">
   <div class="container">
     <div class="problem-top">
-      <div>
+      <div class="fade-in-left">
         <div class="tag accent"><span class="line"></span> The Market Reality</div>
         <div class="sec-title">Skincare consumers don't wait for campaign windows.</div>
         <div class="sec-desc">The brands winning in 2026 aren't the ones with the biggest media budgets. They're the ones showing up in feeds every single day through voices consumers already trust.</div>
       </div>
-      <div class="problem-img-wrap fade-in">
-        <img src="https://images.unsplash.com/photo-1612817288484-6f916006741a?w=800&h=600&fit=crop" alt="Skincare market">
+      <div class="problem-img-wrap fade-in-right tilt-card">
+        <img src="https://images.unsplash.com/photo-1612817288484-6f916006741a?w=800&h=600&fit=crop" alt="Skincare market" loading="lazy">
         <div class="problem-img-overlay">
           <div>
-            <div class="problem-img-stat">#2</div>
+            <div class="problem-img-stat counter" data-target="2" data-prefix="#" data-decimals="0">#2</div>
             <div class="problem-img-label">Neutrogena lost its #1 dermatologist recommended status to CeraVe. The reclaim starts now.</div>
           </div>
         </div>
       </div>
     </div>
     <div class="problem-grid">
-      <div class="p-card fade-in s1">
-        <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=600&h=320&fit=crop" alt="Social skincare">
+      <div class="p-card fade-in s1 tilt-card">
+        <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=600&h=360&fit=crop" alt="Social skincare" loading="lazy">
         <div class="p-card-body">
           <h3>CeraVe Seized the Crown</h3>
           <p>Their weapon? A relentless, always on creator strategy that turned TikTok into their clinical trial. Organic, constant, impossible to ignore.</p>
         </div>
       </div>
-      <div class="p-card fade-in s2">
-        <img src="https://images.unsplash.com/photo-1531746790095-e5995f3e0120?w=600&h=320&fit=crop" alt="Gen Z">
+      <div class="p-card fade-in s2 tilt-card">
+        <img src="https://images.unsplash.com/photo-1531746790095-e5995f3e0120?w=600&h=360&fit=crop" alt="Gen Z" loading="lazy">
         <div class="p-card-body">
           <h3>Gen Z Trusts Creators Over Ads</h3>
           <p>80% of consumers buy more from brands that partner with influencers beyond one off posts. Campaign bursts leave gaps competitors fill.</p>
         </div>
       </div>
-      <div class="p-card fade-in s3">
-        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=320&fit=crop" alt="Lab science">
+      <div class="p-card fade-in s3 tilt-card">
+        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=360&fit=crop" alt="Lab science" loading="lazy">
         <div class="p-card-body">
           <h3>Science Needs Storytelling</h3>
           <p>"Beauty to a Science" is powerful. But clinical claims need human translation. Dermatologist creators bridge lab to bathroom shelf.</p>
@@ -794,54 +994,61 @@ footer a:hover { color: var(--paid-accent); }
   </div>
 </section>
 
+<!-- WAVE -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+    <path d="M0,40 C360,80 720,0 1440,40 L1440,80 L0,80 Z" fill="#000"/>
+  </svg>
+</div>
+
 <!-- DATA -->
-<section class="data" id="data">
+<section class="data" id="data" data-section="data" data-nav-label="Data" data-nav-dark="true">
   <div class="container">
     <div class="data-layout">
-      <div>
+      <div class="fade-in-left">
         <div class="tag"><span class="line" style="background:var(--paid-accent)"></span> <span style="color:var(--paid-accent)">The Numbers</span></div>
         <div class="sec-title" style="color:var(--paid-white)">The creator economy isn't a trend. It's the new media infrastructure.</div>
-        <div class="sec-desc" style="color:rgba(255,255,255,0.45)">Kenvue increased total brand investment by 20% in 2024. The question isn't whether to invest in creators. It's whether your infrastructure can keep up.</div>
+        <div class="sec-desc" style="color:rgba(255,255,255,0.4)">Kenvue increased total brand investment by 20% in 2024. The question isn't whether to invest in creators. It's whether your infrastructure can keep up.</div>
       </div>
-      <div class="chart-box fade-in">
+      <div class="chart-box fade-in-right" id="chartBox">
         <div class="chart-label">Creator Content vs. Brand Content / Avg. Engagement Rate</div>
         <div class="chart-bars">
           <div class="bar-group">
-            <div class="bar-val">1.2%</div>
-            <div class="bar muted" style="height: 22%;"></div>
+            <div class="bar-val" id="barVal1">1.2%</div>
+            <div class="bar muted" data-animated="false" data-height="22%" style="height: 8px;"></div>
             <div class="bar-lbl">Brand Ads</div>
           </div>
           <div class="bar-group">
-            <div class="bar-val">3.8%</div>
-            <div class="bar green" style="height: 58%;"></div>
+            <div class="bar-val" id="barVal2">3.8%</div>
+            <div class="bar green" data-animated="false" data-height="58%" style="height: 8px;"></div>
             <div class="bar-lbl">Campaign Creators</div>
           </div>
           <div class="bar-group">
-            <div class="bar-val">5.6%</div>
-            <div class="bar accent" style="height: 90%;"></div>
+            <div class="bar-val" id="barVal3">5.6%</div>
+            <div class="bar accent" data-animated="false" data-height="90%" style="height: 8px;"></div>
             <div class="bar-lbl">Always On Creators</div>
           </div>
         </div>
       </div>
     </div>
     <div class="stats-row">
-      <div class="stat fade-in s1">
-        <div class="stat-num accent">$250B</div>
+      <div class="stat fade-in s1 tilt-card tilt-card-dark">
+        <div class="stat-num accent counter" data-target="250" data-prefix="$" data-suffix="B">$0B</div>
         <div class="stat-text">Creator economy market size by 2027</div>
         <div class="stat-src">Goldman Sachs</div>
       </div>
-      <div class="stat fade-in s2">
-        <div class="stat-num accent">4.7x</div>
+      <div class="stat fade-in s2 tilt-card tilt-card-dark">
+        <div class="stat-num accent counter" data-target="4.7" data-suffix="x" data-decimals="1">0x</div>
         <div class="stat-text">Higher engagement for creator vs. brand content</div>
         <div class="stat-src">Sprout Social 2025</div>
       </div>
-      <div class="stat fade-in s3">
-        <div class="stat-num green">35%</div>
+      <div class="stat fade-in s3 tilt-card tilt-card-dark">
+        <div class="stat-num green counter" data-target="35" data-suffix="%">0%</div>
         <div class="stat-text">Acne reduction documented via Neutrogena creator challenge</div>
         <div class="stat-src">@Doctorly Partnership</div>
       </div>
-      <div class="stat fade-in s4">
-        <div class="stat-num white">20%</div>
+      <div class="stat fade-in s4 tilt-card tilt-card-dark">
+        <div class="stat-num white counter" data-target="20" data-suffix="%">0%</div>
         <div class="stat-text">Repeat purchase lift from digital diagnostic pathways</div>
         <div class="stat-src">Kenvue Investor Report</div>
       </div>
@@ -849,26 +1056,33 @@ footer a:hover { color: var(--paid-accent); }
   </div>
 </section>
 
-<!-- QUOTE -->
-<div class="quote-break">
-  <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1920&h=800&fit=crop" alt="Beauty editorial">
-  <div class="quote-inner">
+<!-- WAVE -->
+<div class="wave-divider flip">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+    <path d="M0,40 C360,80 720,0 1440,40 L1440,80 L0,80 Z" fill="#000"/>
+  </svg>
+</div>
+
+<!-- QUOTE 1 -->
+<div class="quote-break" data-section="quote1" data-nav-dark="false">
+  <div class="quote-break-bg" style="background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1920&h=800&fit=crop');"></div>
+  <div class="quote-inner scale-in">
     <blockquote>"Neutrogena's social media strategy involves amplifying our core message through credible voices, generating authentic content that demonstrates scientific proof and visible results."</blockquote>
     <cite>Neutrogena Global Marketing, 2025</cite>
   </div>
 </div>
 
 <!-- SOLUTION -->
-<section class="solution" id="solution">
+<section class="solution" id="solution" data-section="solution" data-nav-label="Framework">
   <div class="container">
-    <div class="solution-header">
+    <div class="solution-header fade-in">
       <div class="tag accent" style="justify-content:center"><span class="line"></span> The #paid Framework</div>
       <div class="sec-title">Three Pillars of Always On Creator Infrastructure</div>
       <div class="sec-desc">Move from campaign based bursts to a permanent creator engine that compounds trust, content, and performance every day.</div>
     </div>
     <div class="pillars">
-      <div class="pillar fade-in s1">
-        <img class="pillar-img" src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&h=400&fit=crop" alt="Discovery">
+      <div class="pillar fade-in s1 tilt-card">
+        <div class="pillar-img-wrap"><img class="pillar-img" src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&h=440&fit=crop" alt="Discovery" loading="lazy"></div>
         <div class="pillar-body">
           <div class="pillar-num accent">01 / Discover + Match</div>
           <h3>Handraise Powered Creator Discovery</h3>
@@ -881,8 +1095,8 @@ footer a:hover { color: var(--paid-accent); }
           </ul>
         </div>
       </div>
-      <div class="pillar fade-in s2">
-        <img class="pillar-img" src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop" alt="Create">
+      <div class="pillar fade-in s2 tilt-card">
+        <div class="pillar-img-wrap"><img class="pillar-img" src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=440&fit=crop" alt="Create" loading="lazy"></div>
         <div class="pillar-body">
           <div class="pillar-num green">02 / Activate + Amplify</div>
           <h3>Content That Lives Beyond Flights</h3>
@@ -895,8 +1109,8 @@ footer a:hover { color: var(--paid-accent); }
           </ul>
         </div>
       </div>
-      <div class="pillar fade-in s3">
-        <img class="pillar-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop" alt="Analytics">
+      <div class="pillar fade-in s3 tilt-card">
+        <div class="pillar-img-wrap"><img class="pillar-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=440&fit=crop" alt="Analytics" loading="lazy"></div>
         <div class="pillar-body">
           <div class="pillar-num accent">03 / Measure + Scale</div>
           <h3>Attribution to the Shelf</h3>
@@ -914,14 +1128,14 @@ footer a:hover { color: var(--paid-accent); }
 </section>
 
 <!-- HANDRAISE -->
-<section class="handraise" id="handraise">
+<section class="handraise" id="handraise" data-section="handraise" data-nav-label="Handraise">
   <div class="container">
     <div class="handraise-grid">
-      <div class="hr-visual fade-in">
-        <img class="hr-visual-img" src="https://images.unsplash.com/photo-1559599101-f09722fb4948?w=800&h=360&fit=crop" alt="Creator filming">
+      <div class="hr-visual fade-in-left tilt-card">
+        <img class="hr-visual-img" src="https://images.unsplash.com/photo-1559599101-f09722fb4948?w=800&h=400&fit=crop" alt="Creator filming" loading="lazy">
         <div class="hr-mock">
           <div class="hr-mock-header">
-            <div class="hr-avatar"><img src="https://images.unsplash.com/photo-1594824476967-48c8b964ac31?w=100&h=100&fit=crop" alt=""></div>
+            <div class="hr-avatar"><img src="https://images.unsplash.com/photo-1594824476967-48c8b964ac31?w=100&h=100&fit=crop" alt="" loading="lazy"></div>
             <div>
               <div class="hr-name">Dr. Sarah Chen, MD</div>
               <div class="hr-handle">Board Certified Dermatologist</div>
@@ -934,13 +1148,13 @@ footer a:hover { color: var(--paid-accent); }
             <span class="hr-tag accent">Gen Z + Millennial</span>
           </div>
           <div class="hr-stats">
-            <div><div class="hr-stat-val">847K</div><div class="hr-stat-lbl">Followers</div></div>
-            <div><div class="hr-stat-val">4.2%</div><div class="hr-stat-lbl">Eng. Rate</div></div>
-            <div><div class="hr-stat-val">92</div><div class="hr-stat-lbl">Brand Fit</div></div>
+            <div><div class="hr-stat-val counter" data-target="847" data-suffix="K">0K</div><div class="hr-stat-lbl">Followers</div></div>
+            <div><div class="hr-stat-val counter" data-target="4.2" data-suffix="%" data-decimals="1">0%</div><div class="hr-stat-lbl">Eng. Rate</div></div>
+            <div><div class="hr-stat-val counter" data-target="92" data-decimals="0">0</div><div class="hr-stat-lbl">Brand Fit</div></div>
           </div>
         </div>
       </div>
-      <div class="hr-text">
+      <div class="hr-text fade-in-right">
         <div class="hr-badge">&#9995; Handraise Technology</div>
         <h2>Creators come to you. Already believing in the product.</h2>
         <p>Traditional outreach yields 3 to 5% response rates and zero brand affinity signals. #paid's Handraise flips the dynamic: creators see the brief, pitch their concept, and raise their hand only when they genuinely want to partner.</p>
@@ -956,37 +1170,37 @@ footer a:hover { color: var(--paid-accent); }
 </section>
 
 <!-- USE CASES -->
-<section class="use-cases-sec" id="usecases">
+<section class="use-cases-sec" id="usecases" data-section="usecases" data-nav-label="Use Cases">
   <div class="container">
-    <div class="uc-header">
+    <div class="uc-header fade-in">
       <div class="tag green" style="justify-content:center"><span class="line"></span> Neutrogena Use Cases</div>
       <div class="sec-title">Always On Across the Portfolio</div>
       <div class="sec-desc" style="margin:0 auto">Each sub brand gets its own creator engine, optimized for seasonal demand and consumer conversation.</div>
     </div>
     <div class="uc-grid">
-      <div class="uc-card fade-in s1">
-        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=360&fit=crop" alt="Sun">
+      <div class="uc-card fade-in s1 tilt-card">
+        <div class="uc-card-img-wrap"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=400&fit=crop" alt="Sun" loading="lazy"></div>
         <div class="uc-card-body">
           <h3>Sun Care (SPF) "Year Round UV Defense"</h3>
           <p>Dermatologist creators debunking SPF myths, UV camera content showing invisible damage, seasonal ramp ups for summer travel.</p>
         </div>
       </div>
-      <div class="uc-card fade-in s2">
-        <img src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=600&h=360&fit=crop" alt="Hydration">
+      <div class="uc-card fade-in s2 tilt-card">
+        <div class="uc-card-img-wrap"><img src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=600&h=400&fit=crop" alt="Hydration" loading="lazy"></div>
         <div class="uc-card-body">
           <h3>Hydro Boost "The Science of Hydration"</h3>
           <p>Clinical ingredient breakdowns from estheticians, before and after hydration meter content, "routine stacking" series.</p>
         </div>
       </div>
-      <div class="uc-card fade-in s3">
-        <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&h=360&fit=crop" alt="Skin">
+      <div class="uc-card fade-in s3 tilt-card">
+        <div class="uc-card-img-wrap"><img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&h=400&fit=crop" alt="Skin" loading="lazy"></div>
         <div class="uc-card-body">
           <h3>Acne "Clear Skin, Real Stories"</h3>
           <p>Long form journey content documenting real results over 8+ weeks. Derm monitored protocols building clinical credibility.</p>
         </div>
       </div>
-      <div class="uc-card fade-in s4">
-        <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&h=360&fit=crop" alt="Night routine">
+      <div class="uc-card fade-in s4 tilt-card">
+        <div class="uc-card-img-wrap"><img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&h=400&fit=crop" alt="Night routine" loading="lazy"></div>
         <div class="uc-card-body">
           <h3>Retinol "The Night Shift"</h3>
           <p>Education first content on retinol myths, correct usage, realistic timelines. Neutrogena as the trusted expert in anti aging.</p>
@@ -998,49 +1212,60 @@ footer a:hover { color: var(--paid-accent); }
 
 <!-- QUOTE 2 -->
 <div class="quote-break">
-  <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1920&h=800&fit=crop" alt="Skincare">
-  <div class="quote-inner">
+  <div class="quote-break-bg" style="background-image: url('https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1920&h=800&fit=crop');"></div>
+  <div class="quote-inner scale-in">
     <blockquote>"80% of consumers are more willing to buy from brands that work with influencers beyond one off social posts."</blockquote>
     <cite>Sprout Social / Q4 2025 Pulse Survey</cite>
   </div>
 </div>
 
 <!-- TIMELINE -->
-<section class="timeline-sec" id="timeline">
+<section class="timeline-sec" id="timeline" data-section="timeline" data-nav-label="Rollout">
   <div class="container">
-    <div class="tl-header">
+    <div class="tl-header fade-in">
       <div class="tag accent" style="justify-content:center"><span class="line"></span> Implementation Roadmap</div>
       <div class="sec-title">Kickoff to Always On in 90 Days</div>
       <div class="sec-desc" style="margin:0 auto">Quick wins while building infrastructure for sustained scale.</div>
     </div>
-    <div class="tl">
+    <div class="tl" id="timeline-container">
+      <div class="tl-line-bg"></div>
+      <div class="tl-line" id="tl-line"></div>
       <div class="tl-item"><div class="tl-dot accent"></div>
-        <div class="tl-card fade-in"><div class="tl-phase accent">Weeks 1 &amp; 2 / Foundation</div><h3>Creator Strategy + Brief Architecture</h3><p>Define creator tiers, build brand safety guidelines, architect always on brief templates per product line.</p></div>
+        <div class="tl-card"><div class="tl-phase accent">Weeks 1 &amp; 2 / Foundation</div><h3>Creator Strategy + Brief Architecture</h3><p>Define creator tiers, build brand safety guidelines, architect always on brief templates per product line.</p></div>
       </div>
       <div class="tl-item"><div class="tl-dot accent"></div>
-        <div class="tl-card fade-in"><div class="tl-phase accent">Weeks 3 &amp; 4 / Launch</div><h3>First Creator Cohort Activation</h3><p>Open Handraising to 50+ pre vetted skincare creators. First briefs live for Hydro Boost and SPF. Publicis integration.</p></div>
+        <div class="tl-card"><div class="tl-phase accent">Weeks 3 &amp; 4 / Launch</div><h3>First Creator Cohort Activation</h3><p>Open Handraising to 50+ pre vetted skincare creators. First briefs live for Hydro Boost and SPF. Publicis integration.</p></div>
       </div>
       <div class="tl-item"><div class="tl-dot green"></div>
-        <div class="tl-card fade-in"><div class="tl-phase green">Weeks 5 to 8 / Amplify</div><h3>Paid Media + Content Licensing</h3><p>Top content enters paid amplification. Whitelisted ads across Meta, TikTok, Pinterest. Content licensing feeds retail media.</p></div>
+        <div class="tl-card"><div class="tl-phase green">Weeks 5 to 8 / Amplify</div><h3>Paid Media + Content Licensing</h3><p>Top content enters paid amplification. Whitelisted ads across Meta, TikTok, Pinterest. Content licensing feeds retail media.</p></div>
       </div>
       <div class="tl-item"><div class="tl-dot green"></div>
-        <div class="tl-card fade-in"><div class="tl-phase green">Weeks 9 to 12 / Scale</div><h3>Full Always On Engine Live</h3><p>Automated pipeline across all sub brands. Dashboards live. Creator retention program launches. Monthly Handraise cadence.</p></div>
+        <div class="tl-card"><div class="tl-phase green">Weeks 9 to 12 / Scale</div><h3>Full Always On Engine Live</h3><p>Automated pipeline across all sub brands. Dashboards live. Creator retention program launches. Monthly Handraise cadence.</p></div>
       </div>
       <div class="tl-item"><div class="tl-dot accent"></div>
-        <div class="tl-card fade-in"><div class="tl-phase accent">Ongoing / Compound</div><h3>Quarterly Optimization + Expansion</h3><p>Expand to Aveeno, Clean &amp; Clear. Scale to 200+ creators. Commerce integrations. Incrementality studies.</p></div>
+        <div class="tl-card"><div class="tl-phase accent">Ongoing / Compound</div><h3>Quarterly Optimization + Expansion</h3><p>Expand to Aveeno, Clean &amp; Clear. Scale to 200+ creators. Commerce integrations. Incrementality studies.</p></div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- WAVE -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+    <path d="M0,40 C360,80 720,0 1440,40 L1440,80 L0,80 Z" fill="#000"/>
+  </svg>
+</div>
+
 <!-- COMPARISON -->
-<section class="compare" id="compare">
+<section class="compare" id="compare" data-section="compare" data-nav-label="Compare" data-nav-dark="true">
   <div class="container">
-    <div class="tag accent" style="justify-content:center"><span class="line"></span> The Shift</div>
-    <div class="sec-title" style="color:var(--paid-white); text-align:center">Campaign Bursts vs.<br>Always On Infrastructure</div>
-    <div class="sec-desc" style="color:rgba(255,255,255,0.4); text-align:center; margin:0 auto 3rem">The old model leaves gaps your competitors rush to fill.</div>
+    <div class="compare-header fade-in">
+      <div class="tag" style="justify-content:center"><span class="line" style="background:var(--paid-accent)"></span> <span style="color:var(--paid-accent)">The Shift</span></div>
+      <div class="sec-title" style="color:var(--paid-white); text-align:center">Campaign Bursts vs.<br>Always On Infrastructure</div>
+      <div class="sec-desc" style="color:rgba(255,255,255,0.35); text-align:center; margin:0 auto">The old model leaves gaps your competitors rush to fill.</div>
+    </div>
     <div class="cmp-grid">
-      <div class="cmp-card old fade-in">
+      <div class="cmp-card old fade-in-left tilt-card tilt-card-dark">
         <h3>Traditional Campaign Model</h3>
         <ul class="cmp-list">
           <li>8 to 12 week flights with gaps between</li>
@@ -1053,7 +1278,7 @@ footer a:hover { color: var(--paid-accent); }
           <li>No content library or licensing</li>
         </ul>
       </div>
-      <div class="cmp-card new fade-in">
+      <div class="cmp-card new fade-in-right tilt-card tilt-card-dark">
         <h3>#paid Always On Infrastructure</h3>
         <ul class="cmp-list">
           <li>365 day creator engine, always live</li>
@@ -1070,27 +1295,34 @@ footer a:hover { color: var(--paid-accent); }
   </div>
 </section>
 
+<!-- WAVE -->
+<div class="wave-divider flip">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+    <path d="M0,40 C360,80 720,0 1440,40 L1440,80 L0,80 Z" fill="#000"/>
+  </svg>
+</div>
+
 <!-- ROI -->
-<section class="roi" id="roi">
+<section class="roi" id="roi" data-section="roi" data-nav-label="Impact">
   <div class="container">
-    <div class="roi-header">
+    <div class="roi-header fade-in">
       <div class="tag accent" style="justify-content:center"><span class="line"></span> Projected Impact</div>
       <div class="sec-title">The Business Case</div>
       <div class="sec-desc" style="margin:0 auto">Based on #paid CPG skincare benchmarks and Kenvue's own digital performance data.</div>
     </div>
     <div class="roi-grid">
-      <div class="roi-card fade-in s1">
-        <div class="roi-num accent">3.2x</div>
+      <div class="roi-card fade-in s1 tilt-card">
+        <div class="roi-num accent counter" data-target="3.2" data-suffix="x" data-decimals="1">0x</div>
         <h3>Return on Creator Spend</h3>
         <p>Average ROAS for always on CPG programs, blending organic reach with paid amplification.</p>
       </div>
-      <div class="roi-card fade-in s2">
-        <div class="roi-num green">62%</div>
+      <div class="roi-card fade-in s2 tilt-card">
+        <div class="roi-num green counter" data-target="62" data-suffix="%">0%</div>
         <h3>Lower Cost Per Engagement</h3>
         <p>Creator content outperforms brand studio on CPE, with longer shelf life and higher save rates.</p>
       </div>
-      <div class="roi-card fade-in s3">
-        <div class="roi-num accent">+40%</div>
+      <div class="roi-card fade-in s3 tilt-card">
+        <div class="roi-num accent counter" data-target="40" data-prefix="+" data-suffix="%">0%</div>
         <h3>Content Volume Increase</h3>
         <p>Always on produces 3 to 5x more content per quarter than campaign bursts, feeding every channel.</p>
       </div>
@@ -1099,15 +1331,15 @@ footer a:hover { color: var(--paid-accent); }
 </section>
 
 <!-- CTA -->
-<section class="final-cta" id="cta">
+<section class="final-cta" id="cta" data-section="cta" data-nav-label="Contact" data-nav-dark="true">
   <div class="container">
-    <h2>Ready to make <span class="accent">Neutrogena</span><br>impossible to ignore?</h2>
-    <p>The skincare conversation happens every day. Let's build the infrastructure that keeps Neutrogena at the center of it.</p>
-    <div class="cta-btns">
-      <a href="mailto:adam@hashtagpaid.com?subject=Kenvue%20x%20%23paid%20%E2%80%94%20Always-On%20Creator%20Infrastructure&body=Let's%20schedule%20a%20deeper%20dive%20on%20the%20Neutrogena%20always-on%20creator%20strategy." class="btn btn-accent">Schedule a Deep Dive &rarr;</a>
-      <a href="#" class="btn btn-outline" onclick="window.print(); return false;">Download as PDF</a>
+    <h2 class="fade-in">Ready to make <span class="accent">Neutrogena</span><br>impossible to ignore?</h2>
+    <p class="fade-in s1">The skincare conversation happens every day. Let's build the infrastructure that keeps Neutrogena at the center of it.</p>
+    <div class="cta-btns fade-in s2">
+      <a href="mailto:adam@hashtagpaid.com?subject=Kenvue%20x%20%23paid%20%E2%80%94%20Always-On%20Creator%20Infrastructure&body=Let's%20schedule%20a%20deeper%20dive%20on%20the%20Neutrogena%20always-on%20creator%20strategy." class="btn btn-accent magnetic-btn">Schedule a Deep Dive &rarr;</a>
+      <a href="#" class="btn btn-outline magnetic-btn" onclick="window.print(); return false;">Download as PDF</a>
     </div>
-    <div class="cta-sig">
+    <div class="cta-sig fade-in s3">
       <p class="name">Adam Rivietz</p>
       <p class="role">Co-Founder &amp; CSO, #paid</p>
       <p class="email">adam@hashtagpaid.com</p>
@@ -1123,17 +1355,58 @@ footer a:hover { color: var(--paid-accent); }
 </footer>
 
 <script>
-const obs = new IntersectionObserver(e => {
-  e.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+/* ══════════════════════════════════════════════
+   INTERACTIVE ENGINE
+   ══════════════════════════════════════════════ */
 
-document.getElementById('nav').addEventListener('scroll', null);
-window.addEventListener('scroll', () => {
-  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+// ══════════ LOADING SCREEN ══════════
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('done');
+    document.body.style.overflow = '';
+    initHeroReveal();
+  }, 2600);
+});
+document.body.style.overflow = 'hidden';
+
+// ══════════ CUSTOM CURSOR ══════════
+const dot = document.getElementById('cursorDot');
+const ring = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  dot.style.left = mouseX + 'px';
+  dot.style.top = mouseY + 'px';
 });
 
+function animateRing() {
+  ringX += (mouseX - ringX) * 0.15;
+  ringY += (mouseY - ringY) * 0.15;
+  ring.style.left = ringX + 'px';
+  ring.style.top = ringY + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
 
+document.querySelectorAll('a, button, .btn, .magnetic-btn, .p-card, .pillar, .uc-card, .roi-card, .stat, .cmp-card, .hero-card, .side-nav-dot').forEach(el => {
+  el.addEventListener('mouseenter', () => ring.classList.add('hovering'));
+  el.addEventListener('mouseleave', () => ring.classList.remove('hovering'));
+});
+
+// ══════════ SCROLL PROGRESS ══════════
+const scrollBar = document.getElementById('scrollProgress');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  scrollBar.style.width = (window.scrollY / h * 100) + '%';
+}, { passive: true });
+
+// ══════════ NAV SCROLL ══════════
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+// ══════════ SMOOTH ANCHOR SCROLL ══════════
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const t = document.querySelector(a.getAttribute('href'));
@@ -1141,28 +1414,272 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
-// Counter animation
-document.querySelectorAll('.stat-num, .roi-num').forEach(el => {
-  const text = el.textContent;
-  const m = text.match(/([\d.]+)/);
-  if (!m) return;
-  const target = parseFloat(m[1]);
-  const pre = text.slice(0, text.indexOf(m[1]));
-  const suf = text.slice(text.indexOf(m[1]) + m[1].length);
-  const dec = m[1].includes('.');
-  const o = new IntersectionObserver(e => {
-    e.forEach(entry => {
-      if (entry.isIntersecting) {
-        let c = 0; const steps = 50; const inc = target / steps;
-        const t = setInterval(() => {
-          c += inc; if (c >= target) { c = target; clearInterval(t); }
-          el.textContent = pre + (dec ? c.toFixed(1) : Math.round(c)) + suf;
-        }, 1600 / steps);
-        o.unobserve(el);
+// ══════════ SIDE NAV DOTS ══════════
+const sections = document.querySelectorAll('[data-section]');
+const sideNav = document.getElementById('sideNav');
+
+sections.forEach(sec => {
+  if (!sec.dataset.navLabel) return;
+  const d = document.createElement('div');
+  d.className = 'side-nav-dot' + (sec.dataset.navDark === 'true' ? ' dark' : '');
+  d.dataset.target = sec.dataset.section;
+  const tip = document.createElement('span');
+  tip.className = 'side-nav-tooltip';
+  tip.textContent = sec.dataset.navLabel;
+  d.appendChild(tip);
+  d.addEventListener('click', () => sec.scrollIntoView({ behavior: 'smooth' }));
+  sideNav.appendChild(d);
+});
+
+function updateSideNav() {
+  const dots = sideNav.querySelectorAll('.side-nav-dot');
+  let current = '';
+  sections.forEach(sec => {
+    const rect = sec.getBoundingClientRect();
+    if (rect.top <= window.innerHeight * 0.5 && rect.bottom > window.innerHeight * 0.3) {
+      current = sec.dataset.section;
+    }
+  });
+  dots.forEach(d => {
+    d.classList.toggle('active', d.dataset.target === current);
+  });
+}
+window.addEventListener('scroll', updateSideNav, { passive: true });
+updateSideNav();
+
+// ══════════ SCROLL ANIMATIONS ══════════
+const animObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .scale-in').forEach(el => {
+  animObserver.observe(el);
+});
+
+// ══════════ HERO TEXT REVEAL ══════════
+function initHeroReveal() {
+  const h1 = document.querySelector('.reveal-text');
+  if (!h1) return;
+  const html = h1.innerHTML;
+  const wrapped = html.replace(/([^\s<>]+)/g, (match) => {
+    if (match.startsWith('<') || match.startsWith('/')) return match;
+    return `<span class="reveal-word">${match}</span>`;
+  });
+  h1.innerHTML = wrapped;
+  const words = h1.querySelectorAll('.reveal-word');
+  words.forEach((w, i) => {
+    setTimeout(() => w.classList.add('visible'), 100 + i * 60);
+  });
+}
+
+// ══════════ PARTICLE CANVAS ══════════
+const canvas = document.getElementById('hero-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let heroMouseX = 0, heroMouseY = 0;
+
+function resizeCanvas() {
+  canvas.width = canvas.parentElement.offsetWidth;
+  canvas.height = canvas.parentElement.offsetHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+  constructor() {
+    this.reset();
+  }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.vx = (Math.random() - 0.5) * 0.3;
+    this.vy = (Math.random() - 0.5) * 0.3;
+    this.size = Math.random() * 1.5 + 0.5;
+    this.alpha = Math.random() * 0.3 + 0.05;
+  }
+  update() {
+    const dx = heroMouseX - this.x;
+    const dy = heroMouseY - this.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < 200) {
+      const force = (200 - dist) / 200 * 0.008;
+      this.vx += dx * force;
+      this.vy += dy * force;
+    }
+    this.vx *= 0.98;
+    this.vy *= 0.98;
+    this.x += this.vx;
+    this.y += this.vy;
+    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(221, 224, 65, ${this.alpha})`;
+    ctx.fill();
+  }
+}
+
+const particleCount = Math.min(80, Math.floor(window.innerWidth / 15));
+for (let i = 0; i < particleCount; i++) particles.push(new Particle());
+
+function drawConnections() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 150) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        const alpha = (1 - dist / 150) * 0.06;
+        ctx.strokeStyle = `rgba(221, 224, 65, ${alpha})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
       }
+    }
+  }
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  drawConnections();
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+document.querySelector('.hero').addEventListener('mousemove', e => {
+  const rect = canvas.getBoundingClientRect();
+  heroMouseX = e.clientX - rect.left;
+  heroMouseY = e.clientY - rect.top;
+});
+
+// ══════════ 3D TILT CARDS ══════════
+document.querySelectorAll('.tilt-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const rotateX = (y - cy) / cy * -4;
+    const rotateY = (x - cx) / cx * 4;
+    card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(600px) rotateX(0) rotateY(0) translateY(0)';
+  });
+});
+
+// ══════════ MAGNETIC BUTTONS ══════════
+document.querySelectorAll('.magnetic-btn').forEach(btn => {
+  btn.addEventListener('mousemove', e => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = 'translate(0, 0)';
+  });
+});
+
+// ══════════ COUNTER ANIMATION ══════════
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    if (el.dataset.counted) return;
+    el.dataset.counted = 'true';
+
+    const target = parseFloat(el.dataset.target);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const decimals = parseInt(el.dataset.decimals ?? (target % 1 !== 0 ? 1 : 0));
+    const duration = 1800;
+    const start = performance.now();
+
+    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+    function tick(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const val = target * easeOut(progress);
+      el.textContent = prefix + val.toFixed(decimals) + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  });
+}, { threshold: 0.4 });
+
+document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+// ══════════ CHART BAR ANIMATION ══════════
+const chartObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const bars = entry.target.querySelectorAll('.bar');
+    const vals = entry.target.querySelectorAll('.bar-val');
+    bars.forEach((bar, i) => {
+      setTimeout(() => {
+        bar.removeAttribute('data-animated');
+        bar.style.height = bar.dataset.height;
+      }, i * 200);
     });
-  }, { threshold: 0.5 });
-  o.observe(el);
+    vals.forEach((v, i) => {
+      setTimeout(() => v.classList.add('visible'), 800 + i * 200);
+    });
+    chartObserver.unobserve(entry.target);
+  });
+}, { threshold: 0.3 });
+
+const chartBox = document.getElementById('chartBox');
+if (chartBox) chartObserver.observe(chartBox);
+
+// ══════════ TIMELINE DRAW ══════════
+const tlContainer = document.getElementById('timeline-container');
+const tlLine = document.getElementById('tl-line');
+const tlItems = tlContainer ? tlContainer.querySelectorAll('.tl-item') : [];
+
+const tlDotObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelector('.tl-dot').classList.add('visible');
+      entry.target.querySelector('.tl-card').classList.add('visible');
+    }
+  });
+}, { threshold: 0.3, rootMargin: '0px 0px -60px 0px' });
+
+tlItems.forEach(item => tlDotObserver.observe(item));
+
+function updateTimelineLine() {
+  if (!tlContainer) return;
+  const containerRect = tlContainer.getBoundingClientRect();
+  const viewportMid = window.innerHeight * 0.6;
+  const progress = Math.max(0, Math.min(1, (viewportMid - containerRect.top) / containerRect.height));
+  tlLine.style.height = (progress * 100) + '%';
+}
+window.addEventListener('scroll', updateTimelineLine, { passive: true });
+
+// ══════════ KEYBOARD NAV ══════════
+const navSections = Array.from(document.querySelectorAll('[data-section]'));
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    let current = 0;
+    navSections.forEach((sec, i) => {
+      if (sec.getBoundingClientRect().top <= window.innerHeight * 0.4) current = i;
+    });
+    const next = e.key === 'ArrowDown' ? Math.min(current + 1, navSections.length - 1) : Math.max(current - 1, 0);
+    navSections[next].scrollIntoView({ behavior: 'smooth' });
+  }
 });
 </script>
 
