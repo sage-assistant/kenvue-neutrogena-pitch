@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>#paid x Kenvue | Always-On Creator Infrastructure for Neutrogena</title>
+<title>#paid x Kenvue | Always On Creator Infrastructure for Neutrogena</title>
 <link rel="icon" href="https://cdn.prod.website-files.com/5c34f4c0ee3329913fc72eac/5dc491c961fc96508a95d84b_favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,10 +12,10 @@
 /*
   ═════════════════════════════════════════
   #paid Brand System
-  Primary: #FF492C (Coral Red)
   Cream:   #f2f0eb
-  Lime:    #dde041
-  Blue:    #4d65ff
+  Accent:  #dde041 (Yellow-Green)
+  Green:   #11bf62
+  Dark:    #000 / #121212
   Font:    Inter (Maison Neue substitute)
   DM Mono for labels/code
   ═════════════════════════════════════════
@@ -23,16 +23,17 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --paid-red: #FF492C;
-  --paid-red-dark: #E03D22;
-  --paid-red-light: #FF6B52;
+  --paid-accent: #dde041;
+  --paid-accent-dark: #c5c83a;
+  --paid-accent-light: #e8e96a;
+  --paid-accent-text: #8B8E00;
+  --paid-green: #11bf62;
+  --paid-green-light: #15d670;
+  --paid-green-dark: #0ea854;
   --paid-cream: #f2f0eb;
   --paid-cream-dark: #E8E5DF;
-  --paid-lime: #dde041;
-  --paid-blue: #4d65ff;
-  --paid-blue-light: #6B7FFF;
-  --paid-black: #1a1a1a;
-  --paid-dark: #2d2d2d;
+  --paid-black: #000;
+  --paid-dark: #121212;
   --paid-gray: #6b6b6b;
   --paid-gray-light: #9a9a9a;
   --paid-border: #DFE3E8;
@@ -58,40 +59,40 @@ img { max-width: 100%; display: block; }
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   padding: 1rem 2rem;
-  background: rgba(242, 240, 235, 0.9);
+  background: rgba(0, 0, 0, 0.92);
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border-bottom: 1px solid var(--paid-border);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
   transition: all 0.3s var(--ease);
 }
-nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
+nav.scrolled { padding: 0.6rem 2rem; background: rgba(0, 0, 0, 0.97); }
 .nav-inner {
   max-width: 1160px; margin: 0 auto;
   display: flex; align-items: center; justify-content: space-between;
 }
 .nav-logo {
   font-family: var(--font-main);
-  font-weight: 900; font-size: 1.2rem;
-  color: var(--paid-black);
+  font-weight: 900; font-size: 1.4rem;
+  color: var(--paid-white);
   text-decoration: none;
   letter-spacing: -0.02em;
 }
-.nav-logo .hash { color: var(--paid-red); }
+.nav-logo .hash { color: var(--paid-accent); }
 .nav-links { display: flex; gap: 1.75rem; align-items: center; }
 .nav-links a {
-  color: var(--paid-gray); text-decoration: none;
+  color: rgba(255,255,255,0.5); text-decoration: none;
   font-size: 0.85rem; font-weight: 500;
   transition: color 0.2s;
 }
-.nav-links a:hover { color: var(--paid-black); }
+.nav-links a:hover { color: var(--paid-white); }
 .nav-cta-btn {
-  background: var(--paid-red) !important; color: var(--paid-white) !important;
+  background: var(--paid-accent) !important; color: var(--paid-black) !important;
   padding: 0.5rem 1.25rem !important; border-radius: 100px;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
   transition: all 0.25s var(--ease) !important;
   font-size: 0.85rem !important;
 }
-.nav-cta-btn:hover { background: var(--paid-red-dark) !important; transform: translateY(-1px); }
+.nav-cta-btn:hover { background: var(--paid-accent-light) !important; transform: translateY(-1px); }
 @media (max-width: 768px) { .nav-links { display: none; } }
 
 /* ═══════════════ HERO ═══════════════ */
@@ -102,14 +103,14 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
 }
 .hero-bg-img {
   position: absolute; inset: 0;
-  background: url('https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1920&q=80') center/cover;
-  opacity: 0.15; filter: saturate(0.5);
+  background: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=1920&q=80') center/cover;
+  opacity: 0.08; filter: saturate(0.3);
 }
 .hero-gradient {
   position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse 80% 70% at 60% 40%, rgba(255, 73, 44, 0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 50% at 10% 80%, rgba(77, 101, 255, 0.08) 0%, transparent 50%);
+    radial-gradient(ellipse 80% 70% at 60% 40%, rgba(221, 224, 65, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 10% 80%, rgba(17, 191, 98, 0.04) 0%, transparent 50%);
 }
 .hero-inner {
   position: relative; z-index: 2;
@@ -120,14 +121,20 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
 @media (max-width: 900px) {
   .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
 }
+.hero-eyebrow {
+  font-family: var(--font-mono); font-size: 0.65rem;
+  color: rgba(255,255,255,0.35); text-transform: uppercase;
+  letter-spacing: 0.15em; margin-bottom: 0.75rem;
+  animation: fadeUp 0.6s var(--ease) both;
+}
 .hero-tag {
   display: inline-flex; align-items: center; gap: 0.5rem;
   font-family: var(--font-mono); font-size: 0.7rem;
-  color: var(--paid-red); text-transform: uppercase;
+  color: var(--paid-accent); text-transform: uppercase;
   letter-spacing: 0.12em; margin-bottom: 1.5rem;
   animation: fadeUp 0.6s var(--ease) both;
 }
-.hero-tag .line { width: 24px; height: 1px; background: var(--paid-red); }
+.hero-tag .line { width: 24px; height: 1px; background: var(--paid-accent); }
 .hero h1 {
   font-size: clamp(2.5rem, 5.5vw, 4.25rem);
   font-weight: 900; line-height: 1.02;
@@ -135,10 +142,10 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
   margin-bottom: 1.5rem;
   animation: fadeUp 0.6s 0.1s var(--ease) both;
 }
-.hero h1 .red { color: var(--paid-red); }
-.hero h1 .lime { color: var(--paid-lime); }
+.hero h1 .accent { color: var(--paid-accent); }
+.hero h1 .green { color: var(--paid-green); }
 .hero-desc {
-  font-size: 1.1rem; color: rgba(255,255,255,0.55);
+  font-size: 1.1rem; color: rgba(255,255,255,0.5);
   line-height: 1.7; max-width: 520px; margin-bottom: 2.5rem;
   animation: fadeUp 0.6s 0.2s var(--ease) both;
 }
@@ -155,10 +162,10 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
   text-decoration: none; transition: all 0.25s var(--ease);
   cursor: pointer; border: none;
 }
-.btn-red {
-  background: var(--paid-red); color: var(--paid-white);
+.btn-accent {
+  background: var(--paid-accent); color: var(--paid-black);
 }
-.btn-red:hover { background: var(--paid-red-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,73,44,0.3); }
+.btn-accent:hover { background: var(--paid-accent-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(221,224,65,0.25); }
 .btn-outline {
   background: transparent; color: var(--paid-white);
   border: 1.5px solid rgba(255,255,255,0.2);
@@ -208,7 +215,7 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
 }
 .ticker-dot {
   width: 4px; height: 4px; border-radius: 50%;
-  background: var(--paid-red); flex-shrink: 0; opacity: 0.5;
+  background: var(--paid-accent); flex-shrink: 0; opacity: 0.5;
 }
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
@@ -220,12 +227,10 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
   margin-bottom: 1rem;
 }
 .tag .line { width: 20px; height: 1px; }
-.tag.red { color: var(--paid-red); }
-.tag.red .line { background: var(--paid-red); }
-.tag.blue { color: var(--paid-blue); }
-.tag.blue .line { background: var(--paid-blue); }
-.tag.lime { color: #8B8E00; }
-.tag.lime .line { background: var(--paid-lime); }
+.tag.accent { color: var(--paid-accent-text); }
+.tag.accent .line { background: var(--paid-accent); }
+.tag.green { color: var(--paid-green); }
+.tag.green .line { background: var(--paid-green); }
 
 .sec-title {
   font-size: clamp(1.75rem, 3.5vw, 2.75rem);
@@ -251,11 +256,11 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
 .problem-img-wrap img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
 .problem-img-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(26,26,26,0.7) 0%, rgba(26,26,26,0.2) 100%);
+  background: linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.2) 100%);
   display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem;
 }
 .problem-img-stat {
-  font-size: 4rem; font-weight: 900; color: var(--paid-red);
+  font-size: 4rem; font-weight: 900; color: var(--paid-accent);
   letter-spacing: -0.04em; line-height: 1;
 }
 .problem-img-label { font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-top: 0.5rem; }
@@ -270,7 +275,7 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
   border-radius: 14px; overflow: hidden;
   transition: all 0.3s var(--ease);
 }
-.p-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.06); border-color: var(--paid-red); }
+.p-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.06); border-color: var(--paid-accent); }
 .p-card img { width: 100%; height: 160px; object-fit: cover; }
 .p-card-body { padding: 1.5rem; }
 .p-card h3 { font-size: 1rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
@@ -278,8 +283,8 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
 
 /* ═══════════════ DATA ═══════════════ */
 .data { padding: 6rem 0; background: var(--paid-black); position: relative; }
-.data .tag { color: var(--paid-lime); }
-.data .tag .line { background: var(--paid-lime); }
+.data .tag { color: var(--paid-accent); }
+.data .tag .line { background: var(--paid-accent); }
 .data .sec-title { color: var(--paid-white); }
 .data .sec-desc { color: rgba(255,255,255,0.5); }
 
@@ -305,9 +310,9 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
   width: 100%; border-radius: 6px 6px 2px 2px; min-height: 12px;
   transition: height 1s var(--ease);
 }
-.bar.red { background: var(--paid-red); }
-.bar.lime { background: var(--paid-lime); }
-.bar.blue { background: var(--paid-blue); }
+.bar.muted { background: rgba(255,255,255,0.15); }
+.bar.green { background: var(--paid-green); }
+.bar.accent { background: var(--paid-accent); }
 .bar-val {
   font-family: var(--font-mono); font-size: 0.75rem;
   font-weight: 500; color: var(--paid-white);
@@ -335,9 +340,8 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
   font-size: 2.5rem; font-weight: 900;
   letter-spacing: -0.04em; margin-bottom: 0.4rem;
 }
-.stat-num.red { color: var(--paid-red); }
-.stat-num.lime { color: var(--paid-lime); }
-.stat-num.blue { color: var(--paid-blue); }
+.stat-num.accent { color: var(--paid-accent); }
+.stat-num.green { color: var(--paid-green); }
 .stat-num.white { color: var(--paid-white); }
 .stat-text { font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.5; }
 .stat-src {
@@ -354,7 +358,7 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
 .quote-break img {
   position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: cover;
-  filter: brightness(0.35) saturate(1.2);
+  filter: brightness(0.3) saturate(1.2);
 }
 .quote-inner {
   position: relative; z-index: 2; text-align: center;
@@ -369,7 +373,7 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
 .quote-inner cite {
   display: block; margin-top: 1.25rem;
   font-family: var(--font-mono); font-size: 0.7rem;
-  color: var(--paid-red); font-style: normal;
+  color: var(--paid-accent); font-style: normal;
   text-transform: uppercase; letter-spacing: 0.1em;
 }
 
@@ -394,9 +398,8 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
   text-transform: uppercase; letter-spacing: 0.12em;
   margin-bottom: 0.75rem;
 }
-.pillar-num.red { color: var(--paid-red); }
-.pillar-num.blue { color: var(--paid-blue); }
-.pillar-num.lime { color: #8B8E00; }
+.pillar-num.accent { color: var(--paid-accent-text); }
+.pillar-num.green { color: var(--paid-green); }
 .pillar h3 {
   font-size: 1.25rem; font-weight: 800;
   letter-spacing: -0.02em; margin-bottom: 0.75rem;
@@ -412,9 +415,9 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
   content: ''; position: absolute; left: 0; top: 0.65rem;
   width: 5px; height: 5px; border-radius: 50%;
 }
-.pillar:nth-child(1) .pillar-list li::before { background: var(--paid-red); }
-.pillar:nth-child(2) .pillar-list li::before { background: var(--paid-blue); }
-.pillar:nth-child(3) .pillar-list li::before { background: var(--paid-lime); }
+.pillar:nth-child(1) .pillar-list li::before { background: var(--paid-accent); }
+.pillar:nth-child(2) .pillar-list li::before { background: var(--paid-green); }
+.pillar:nth-child(3) .pillar-list li::before { background: var(--paid-accent); }
 
 /* ═══════════════ HANDRAISE ═══════════════ */
 .handraise { padding: 6rem 0; background: var(--paid-white); border-top: 1px solid var(--paid-border); }
@@ -445,9 +448,8 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
   font-family: var(--font-mono); font-size: 0.55rem;
   text-transform: uppercase; letter-spacing: 0.06em;
 }
-.hr-tag.red { background: rgba(255,73,44,0.15); color: var(--paid-red-light); }
-.hr-tag.lime { background: rgba(221,224,65,0.15); color: var(--paid-lime); }
-.hr-tag.blue { background: rgba(77,101,255,0.15); color: var(--paid-blue-light); }
+.hr-tag.accent { background: rgba(221,224,65,0.15); color: var(--paid-accent); }
+.hr-tag.green { background: rgba(17,191,98,0.15); color: var(--paid-green-light); }
 .hr-stats {
   display: flex; gap: 1.5rem; padding-top: 1rem;
   border-top: 1px solid rgba(255,255,255,0.06);
@@ -461,10 +463,10 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
 
 .hr-badge {
   display: inline-flex; align-items: center; gap: 0.5rem;
-  background: rgba(255,73,44,0.06); border: 1px solid rgba(255,73,44,0.12);
+  background: rgba(221,224,65,0.08); border: 1px solid rgba(221,224,65,0.2);
   padding: 0.4rem 0.9rem; border-radius: 100px;
   font-family: var(--font-mono); font-size: 0.6rem;
-  color: var(--paid-red); text-transform: uppercase;
+  color: var(--paid-accent-text); text-transform: uppercase;
   letter-spacing: 0.1em;
 }
 .hr-text h2 {
@@ -501,7 +503,7 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
   border-radius: 14px; overflow: hidden;
   transition: all 0.3s var(--ease);
 }
-.uc-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-color: var(--paid-red); }
+.uc-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-color: var(--paid-accent); }
 .uc-card img { width: 100%; height: 180px; object-fit: cover; }
 .uc-card-body { padding: 1.5rem; }
 .uc-card h3 { font-size: 0.95rem; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 0.4rem; }
@@ -522,12 +524,11 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
 .tl-dot {
   position: absolute; left: 50%; transform: translateX(-50%);
   width: 14px; height: 14px; border-radius: 50%;
-  border: 3px solid var(--paid-cream); z-index: 2;
+  border: 3px solid var(--paid-white); z-index: 2;
 }
 @media (max-width: 768px) { .tl-dot { left: 20px; } }
-.tl-dot.red { background: var(--paid-red); }
-.tl-dot.blue { background: var(--paid-blue); }
-.tl-dot.lime { background: var(--paid-lime); }
+.tl-dot.accent { background: var(--paid-accent); }
+.tl-dot.green { background: var(--paid-green); }
 
 .tl-card {
   width: 44%; background: var(--paid-cream);
@@ -545,16 +546,15 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
   font-family: var(--font-mono); font-size: 0.55rem;
   text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.4rem;
 }
-.tl-phase.red { color: var(--paid-red); }
-.tl-phase.blue { color: var(--paid-blue); }
-.tl-phase.lime { color: #8B8E00; }
+.tl-phase.accent { color: var(--paid-accent-text); }
+.tl-phase.green { color: var(--paid-green); }
 .tl-card h3 { font-size: 0.95rem; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 0.4rem; }
 .tl-card p { font-size: 0.8rem; color: var(--paid-gray); line-height: 1.6; }
 
 /* ═══════════════ COMPARISON ═══════════════ */
 .compare { padding: 6rem 0; background: var(--paid-black); }
-.compare .tag { color: var(--paid-red); }
-.compare .tag .line { background: var(--paid-red); }
+.compare .tag { color: var(--paid-accent); }
+.compare .tag .line { background: var(--paid-accent); }
 .compare .sec-title { color: var(--paid-white); text-align: center; }
 .compare .sec-desc { color: rgba(255,255,255,0.45); text-align: center; margin: 0 auto 3rem; }
 
@@ -564,18 +564,18 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
 .cmp-card { border-radius: 16px; padding: 2rem; }
 .cmp-card.old { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); }
 .cmp-card.new {
-  background: rgba(255,73,44,0.05); border: 1px solid rgba(255,73,44,0.15);
+  background: rgba(221,224,65,0.04); border: 1px solid rgba(221,224,65,0.15);
   position: relative;
 }
 .cmp-card.new::after {
   content: 'RECOMMENDED'; position: absolute; top: -8px; right: 16px;
-  background: var(--paid-red); color: var(--paid-white);
-  font-family: var(--font-mono); font-size: 0.5rem;
+  background: var(--paid-accent); color: var(--paid-black);
+  font-family: var(--font-mono); font-size: 0.5rem; font-weight: 700;
   letter-spacing: 0.12em; padding: 0.25rem 0.6rem; border-radius: 4px;
 }
 .cmp-card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 1.25rem; }
 .cmp-card.old h3 { color: rgba(255,255,255,0.4); }
-.cmp-card.new h3 { color: var(--paid-red); }
+.cmp-card.new h3 { color: var(--paid-accent); }
 .cmp-list { list-style: none; }
 .cmp-list li {
   padding: 0.45rem 0 0.45rem 1.25rem;
@@ -584,8 +584,8 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
 .cmp-card.old .cmp-list li { color: rgba(255,255,255,0.35); }
 .cmp-card.new .cmp-list li { color: rgba(255,255,255,0.6); }
 .cmp-list li::before { position: absolute; left: 0; font-size: 0.8rem; }
-.cmp-card.old .cmp-list li::before { content: '\2715'; color: rgba(255,73,44,0.4); }
-.cmp-card.new .cmp-list li::before { content: '\2713'; color: var(--paid-lime); }
+.cmp-card.old .cmp-list li::before { content: '\2715'; color: rgba(255,255,255,0.2); }
+.cmp-card.new .cmp-list li::before { content: '\2713'; color: var(--paid-green); }
 
 /* ═══════════════ ROI ═══════════════ */
 .roi { padding: 6rem 0; background: var(--paid-cream); }
@@ -603,9 +603,8 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
   font-size: 3rem; font-weight: 900;
   letter-spacing: -0.04em; margin-bottom: 0.75rem;
 }
-.roi-num.red { color: var(--paid-red); }
-.roi-num.blue { color: var(--paid-blue); }
-.roi-num.lime { color: #6B6E00; }
+.roi-num.accent { color: var(--paid-accent-text); }
+.roi-num.green { color: var(--paid-green); }
 .roi-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
 .roi-card p { font-size: 0.825rem; color: var(--paid-gray); line-height: 1.6; }
 
@@ -617,8 +616,8 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
 .final-cta::before {
   content: ''; position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse 60% 50% at 50% 50%, rgba(255,73,44,0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(77,101,255,0.06) 0%, transparent 50%);
+    radial-gradient(ellipse 60% 50% at 50% 50%, rgba(221,224,65,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(17,191,98,0.04) 0%, transparent 50%);
 }
 .final-cta .container { position: relative; z-index: 2; }
 .final-cta h2 {
@@ -627,7 +626,7 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
   line-height: 1.05; letter-spacing: -0.035em;
   margin-bottom: 1.25rem;
 }
-.final-cta h2 .red { color: var(--paid-red); }
+.final-cta h2 .accent { color: var(--paid-accent); }
 .final-cta > .container > p {
   font-size: 1.05rem; color: rgba(255,255,255,0.45);
   line-height: 1.7; max-width: 560px; margin: 0 auto 2.5rem;
@@ -641,7 +640,7 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(242, 240, 235, 0.97); }
 .cta-sig .role { color: rgba(255,255,255,0.45); font-size: 0.85rem; }
 .cta-sig .email {
   font-family: var(--font-mono); font-size: 0.75rem;
-  color: var(--paid-red); margin-top: 0.4rem;
+  color: var(--paid-accent); margin-top: 0.4rem;
 }
 
 /* ═══════════════ FOOTER ═══════════════ */
@@ -658,109 +657,7 @@ footer a {
   color: rgba(255,255,255,0.35); text-decoration: none;
   font-size: 0.75rem; font-family: var(--font-mono);
 }
-footer a:hover { color: var(--paid-red); }
-
-/* ═══════════════ PROGRESS BAR ═══════════════ */
-.progress-bar {
-  position: fixed; top: 0; left: 0; height: 3px;
-  background: var(--paid-red); z-index: 200;
-  width: 0; transition: width 0.1s linear;
-}
-
-/* ═══════════════ CURSOR GLOW ═══════════════ */
-.cursor-glow {
-  position: fixed; width: 300px; height: 300px;
-  border-radius: 50%; pointer-events: none;
-  background: radial-gradient(circle, rgba(255,73,44,0.06) 0%, transparent 70%);
-  transform: translate(-50%, -50%);
-  z-index: 1; transition: opacity 0.3s;
-  opacity: 0;
-}
-body:hover .cursor-glow { opacity: 1; }
-
-/* ═══════════════ 3D TILT ═══════════════ */
-.tilt-card {
-  transform-style: preserve-3d;
-  transition: transform 0.15s var(--ease);
-}
-.tilt-card .tilt-inner {
-  transform: translateZ(20px);
-}
-
-/* ═══════════════ MAGNETIC BUTTONS ═══════════════ */
-.btn { position: relative; overflow: hidden; }
-.btn::after {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.15) 0%, transparent 60%);
-  opacity: 0; transition: opacity 0.3s;
-}
-.btn:hover::after { opacity: 1; }
-
-/* ═══════════════ ANIMATED BARS ═══════════════ */
-.bar { height: 0 !important; }
-.bar.animate { transition: height 1.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
-.bar.animate.red { height: 22% !important; }
-.bar.animate.blue { height: 58% !important; }
-.bar.animate.lime { height: 90% !important; }
-
-/* ═══════════════ PARALLAX ═══════════════ */
-.parallax-layer { transition: transform 0.1s linear; will-change: transform; }
-
-/* ═══════════════ TYPING EFFECT ═══════════════ */
-.typing-cursor::after {
-  content: '|'; color: var(--paid-red);
-  animation: blink 0.8s ease-in-out infinite;
-  margin-left: 2px;
-}
-@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-/* ═══════════════ HOVER REVEAL ═══════════════ */
-.hover-reveal { position: relative; overflow: hidden; }
-.hover-reveal::before {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(255,73,44,0.08), rgba(77,101,255,0.05));
-  transform: translateX(-100%);
-  transition: transform 0.5s var(--ease);
-  z-index: 0;
-}
-.hover-reveal:hover::before { transform: translateX(0); }
-
-/* ═══════════════ PARTICLE CANVAS ═══════════════ */
-#particles {
-  position: absolute; inset: 0; z-index: 1;
-  pointer-events: none;
-}
-
-/* ═══════════════ SCROLL INDICATOR ═══════════════ */
-.scroll-hint {
-  position: absolute; bottom: 2rem; left: 50%;
-  transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-  animation: fadeUp 0.6s 0.8s var(--ease) both;
-}
-.scroll-hint span {
-  font-family: var(--font-mono); font-size: 0.6rem;
-  text-transform: uppercase; letter-spacing: 0.12em;
-  color: rgba(255,255,255,0.3);
-}
-.scroll-mouse {
-  width: 20px; height: 32px; border: 2px solid rgba(255,255,255,0.25);
-  border-radius: 10px; position: relative;
-}
-.scroll-mouse::after {
-  content: ''; position: absolute;
-  top: 6px; left: 50%; transform: translateX(-50%);
-  width: 3px; height: 6px; border-radius: 2px;
-  background: var(--paid-red);
-  animation: scrollDot 1.5s ease-in-out infinite;
-}
-@keyframes scrollDot {
-  0% { transform: translateX(-50%) translateY(0); opacity: 1; }
-  100% { transform: translateX(-50%) translateY(12px); opacity: 0; }
-}
-
-/* ═══════════════ NAV ACTIVE STATES ═══════════════ */
-.nav-links a.active { color: var(--paid-red) !important; }
+footer a:hover { color: var(--paid-accent); }
 
 /* ═══════════════ ANIMATIONS ═══════════════ */
 @keyframes fadeUp {
@@ -776,31 +673,6 @@ body:hover .cursor-glow { opacity: 1; }
 .s2 { transition-delay: 0.16s; }
 .s3 { transition-delay: 0.24s; }
 .s4 { transition-delay: 0.32s; }
-
-/* ═══════════════ INTERACTIVE COUNTER SECTION ═══════════════ */
-.live-counter {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  font-family: var(--font-mono); font-size: 0.6rem;
-  color: rgba(255,255,255,0.3); text-transform: uppercase;
-  letter-spacing: 0.1em; margin-top: 1rem;
-}
-.live-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--paid-lime);
-  animation: pulse-live 2s ease-in-out infinite;
-}
-@keyframes pulse-live {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(221,224,65,0.4); }
-  50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(221,224,65,0); }
-}
-
-/* Smooth image loading */
-.p-card img, .uc-card img, .pillar-img, .hero-card img {
-  transition: transform 0.5s var(--ease), filter 0.5s var(--ease);
-}
-.p-card:hover img, .uc-card:hover img { transform: scale(1.05); }
-.pillar:hover .pillar-img { transform: scale(1.05); filter: brightness(0.6) saturate(1.3); }
-.hero-card:hover img { transform: scale(1.08); filter: brightness(0.9); }
 </style>
 </head>
 <body>
@@ -819,23 +691,18 @@ body:hover .cursor-glow { opacity: 1; }
   </div>
 </nav>
 
-<!-- PROGRESS BAR -->
-<div class="progress-bar" id="progressBar"></div>
-<!-- CURSOR GLOW -->
-<div class="cursor-glow" id="cursorGlow"></div>
-
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg-img"></div>
   <div class="hero-gradient"></div>
-  <canvas id="particles"></canvas>
   <div class="hero-inner">
     <div>
+      <div class="hero-eyebrow">#paid / Confidential Strategy Document</div>
       <div class="hero-tag"><span class="line"></span> Strategic Proposal / Q2 2026</div>
-      <h1>Always-On<br><span class="red">Creator Infrastructure</span><br>for Neutrogena</h1>
-      <p class="hero-desc">Skincare trust isn't built in campaigns. It's built in conversations. Here's how #paid powers Neutrogena's creator engine to run 365 days a year, reclaiming category authority through authentic, science-backed voices.</p>
+      <h1>Always On<br><span class="accent">Creator Infrastructure</span><br>for Neutrogena</h1>
+      <p class="hero-desc">Skincare trust isn't built in campaigns. It's built in conversations. Here's how #paid powers Neutrogena's creator engine to run 365 days a year, reclaiming category authority through authentic, science backed voices.</p>
       <div class="hero-actions">
-        <a href="#solution" class="btn btn-red">See the Framework &rarr;</a>
+        <a href="#solution" class="btn btn-accent">See the Framework &rarr;</a>
         <a href="#data" class="btn btn-outline">Why Now &rarr;</a>
       </div>
     </div>
@@ -858,10 +725,6 @@ body:hover .cursor-glow { opacity: 1; }
       </div>
     </div>
   </div>
-  <div class="scroll-hint">
-    <span>Scroll to explore</span>
-    <div class="scroll-mouse"></div>
-  </div>
 </section>
 
 <!-- TICKER -->
@@ -874,7 +737,7 @@ body:hover .cursor-glow { opacity: 1; }
     <span class="ticker-item">Bright Boost</span><span class="ticker-dot"></span>
     <span class="ticker-item">Retinol SA</span><span class="ticker-dot"></span>
     <span class="ticker-item">Healthy Skin</span><span class="ticker-dot"></span>
-    <span class="ticker-item">Oil-Free Moisture</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Oil Free Moisture</span><span class="ticker-dot"></span>
     <span class="ticker-item">Hydro Boost</span><span class="ticker-dot"></span>
     <span class="ticker-item">Ultra Sheer SPF</span><span class="ticker-dot"></span>
     <span class="ticker-item">Rapid Wrinkle Repair</span><span class="ticker-dot"></span>
@@ -882,7 +745,7 @@ body:hover .cursor-glow { opacity: 1; }
     <span class="ticker-item">Bright Boost</span><span class="ticker-dot"></span>
     <span class="ticker-item">Retinol SA</span><span class="ticker-dot"></span>
     <span class="ticker-item">Healthy Skin</span><span class="ticker-dot"></span>
-    <span class="ticker-item">Oil-Free Moisture</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Oil Free Moisture</span><span class="ticker-dot"></span>
   </div>
 </div>
 
@@ -891,7 +754,7 @@ body:hover .cursor-glow { opacity: 1; }
   <div class="container">
     <div class="problem-top">
       <div>
-        <div class="tag red"><span class="line"></span> The Market Reality</div>
+        <div class="tag accent"><span class="line"></span> The Market Reality</div>
         <div class="sec-title">Skincare consumers don't wait for campaign windows.</div>
         <div class="sec-desc">The brands winning in 2026 aren't the ones with the biggest media budgets. They're the ones showing up in feeds every single day through voices consumers already trust.</div>
       </div>
@@ -900,7 +763,7 @@ body:hover .cursor-glow { opacity: 1; }
         <div class="problem-img-overlay">
           <div>
             <div class="problem-img-stat">#2</div>
-            <div class="problem-img-label">Neutrogena lost its #1 dermatologist-recommended status to CeraVe. The reclaim starts now.</div>
+            <div class="problem-img-label">Neutrogena lost its #1 dermatologist recommended status to CeraVe. The reclaim starts now.</div>
           </div>
         </div>
       </div>
@@ -910,14 +773,14 @@ body:hover .cursor-glow { opacity: 1; }
         <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=600&h=320&fit=crop" alt="Social skincare">
         <div class="p-card-body">
           <h3>CeraVe Seized the Crown</h3>
-          <p>Their weapon? A relentless, always-on creator strategy that turned TikTok into their clinical trial. Organic, constant, impossible to ignore.</p>
+          <p>Their weapon? A relentless, always on creator strategy that turned TikTok into their clinical trial. Organic, constant, impossible to ignore.</p>
         </div>
       </div>
       <div class="p-card fade-in s2">
         <img src="https://images.unsplash.com/photo-1531746790095-e5995f3e0120?w=600&h=320&fit=crop" alt="Gen Z">
         <div class="p-card-body">
           <h3>Gen Z Trusts Creators Over Ads</h3>
-          <p>80% of consumers buy more from brands that partner with influencers beyond one-off posts. Campaign bursts leave gaps competitors fill.</p>
+          <p>80% of consumers buy more from brands that partner with influencers beyond one off posts. Campaign bursts leave gaps competitors fill.</p>
         </div>
       </div>
       <div class="p-card fade-in s3">
@@ -936,7 +799,7 @@ body:hover .cursor-glow { opacity: 1; }
   <div class="container">
     <div class="data-layout">
       <div>
-        <div class="tag"><span class="line" style="background:var(--paid-lime)"></span> <span style="color:var(--paid-lime)">The Numbers</span></div>
+        <div class="tag"><span class="line" style="background:var(--paid-accent)"></span> <span style="color:var(--paid-accent)">The Numbers</span></div>
         <div class="sec-title" style="color:var(--paid-white)">The creator economy isn't a trend. It's the new media infrastructure.</div>
         <div class="sec-desc" style="color:rgba(255,255,255,0.45)">Kenvue increased total brand investment by 20% in 2024. The question isn't whether to invest in creators. It's whether your infrastructure can keep up.</div>
       </div>
@@ -945,35 +808,35 @@ body:hover .cursor-glow { opacity: 1; }
         <div class="chart-bars">
           <div class="bar-group">
             <div class="bar-val">1.2%</div>
-            <div class="bar red" style="height: 22%;"></div>
+            <div class="bar muted" style="height: 22%;"></div>
             <div class="bar-lbl">Brand Ads</div>
           </div>
           <div class="bar-group">
             <div class="bar-val">3.8%</div>
-            <div class="bar blue" style="height: 58%;"></div>
+            <div class="bar green" style="height: 58%;"></div>
             <div class="bar-lbl">Campaign Creators</div>
           </div>
           <div class="bar-group">
             <div class="bar-val">5.6%</div>
-            <div class="bar lime" style="height: 90%;"></div>
-            <div class="bar-lbl">Always-On Creators</div>
+            <div class="bar accent" style="height: 90%;"></div>
+            <div class="bar-lbl">Always On Creators</div>
           </div>
         </div>
       </div>
     </div>
     <div class="stats-row">
       <div class="stat fade-in s1">
-        <div class="stat-num red">$250B</div>
+        <div class="stat-num accent">$250B</div>
         <div class="stat-text">Creator economy market size by 2027</div>
         <div class="stat-src">Goldman Sachs</div>
       </div>
       <div class="stat fade-in s2">
-        <div class="stat-num lime">4.7x</div>
+        <div class="stat-num accent">4.7x</div>
         <div class="stat-text">Higher engagement for creator vs. brand content</div>
         <div class="stat-src">Sprout Social 2025</div>
       </div>
       <div class="stat fade-in s3">
-        <div class="stat-num blue">35%</div>
+        <div class="stat-num green">35%</div>
         <div class="stat-text">Acne reduction documented via Neutrogena creator challenge</div>
         <div class="stat-src">@Doctorly Partnership</div>
       </div>
@@ -999,20 +862,20 @@ body:hover .cursor-glow { opacity: 1; }
 <section class="solution" id="solution">
   <div class="container">
     <div class="solution-header">
-      <div class="tag red" style="justify-content:center"><span class="line"></span> The #paid Framework</div>
-      <div class="sec-title">Three Pillars of Always-On Creator Infrastructure</div>
-      <div class="sec-desc">Move from campaign-based bursts to a permanent creator engine that compounds trust, content, and performance every day.</div>
+      <div class="tag accent" style="justify-content:center"><span class="line"></span> The #paid Framework</div>
+      <div class="sec-title">Three Pillars of Always On Creator Infrastructure</div>
+      <div class="sec-desc">Move from campaign based bursts to a permanent creator engine that compounds trust, content, and performance every day.</div>
     </div>
     <div class="pillars">
       <div class="pillar fade-in s1">
         <img class="pillar-img" src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&h=400&fit=crop" alt="Discovery">
         <div class="pillar-body">
-          <div class="pillar-num red">01 / Discover + Match</div>
-          <h3>Handraise-Powered Creator Discovery</h3>
+          <div class="pillar-num accent">01 / Discover + Match</div>
+          <h3>Handraise Powered Creator Discovery</h3>
           <p>Creators opt in to Neutrogena briefs, signaling genuine brand affinity before a single message is exchanged.</p>
           <ul class="pillar-list">
-            <li>AI-matched scoring for dermatological credibility</li>
-            <li>Skincare-specific audience indexing by skin type</li>
+            <li>AI matched scoring for dermatological credibility</li>
+            <li>Skincare specific audience indexing by skin type</li>
             <li>Tiered pools: derms, estheticians, advocates</li>
             <li>Competitive brand conflict detection</li>
           </ul>
@@ -1021,13 +884,13 @@ body:hover .cursor-glow { opacity: 1; }
       <div class="pillar fade-in s2">
         <img class="pillar-img" src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop" alt="Create">
         <div class="pillar-body">
-          <div class="pillar-num blue">02 / Activate + Amplify</div>
+          <div class="pillar-num green">02 / Activate + Amplify</div>
           <h3>Content That Lives Beyond Flights</h3>
           <p>Whitelisted creator content runs as paid media, extending reach while maintaining the authenticity that earned the click.</p>
           <ul class="pillar-list">
             <li>Whitelisting across Meta, TikTok, Pinterest, YouTube</li>
             <li>Content licensing for owned + retail media</li>
-            <li>Dynamic briefs: seasonal, reactive, always-on</li>
+            <li>Dynamic briefs: seasonal, reactive, always on</li>
             <li>Integrated with Publicis creative workflows</li>
           </ul>
         </div>
@@ -1035,14 +898,14 @@ body:hover .cursor-glow { opacity: 1; }
       <div class="pillar fade-in s3">
         <img class="pillar-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop" alt="Analytics">
         <div class="pillar-body">
-          <div class="pillar-num lime">03 / Measure + Scale</div>
+          <div class="pillar-num accent">03 / Measure + Scale</div>
           <h3>Attribution to the Shelf</h3>
           <p>Connect creator content to actual shelf pulls. Move beyond vanity metrics to prove creator infrastructure drives Kenvue's bottom line.</p>
           <ul class="pillar-list">
-            <li>Full-funnel attribution: awareness to sales lift</li>
+            <li>Full funnel attribution: awareness to sales lift</li>
             <li>Incremental lift studies vs. brand benchmarks</li>
             <li>Creator performance scoring for retention</li>
-            <li>Real-time dashboard for Kenvue + Publicis</li>
+            <li>Real time dashboard for Kenvue + Publicis</li>
           </ul>
         </div>
       </div>
@@ -1061,14 +924,14 @@ body:hover .cursor-glow { opacity: 1; }
             <div class="hr-avatar"><img src="https://images.unsplash.com/photo-1594824476967-48c8b964ac31?w=100&h=100&fit=crop" alt=""></div>
             <div>
               <div class="hr-name">Dr. Sarah Chen, MD</div>
-              <div class="hr-handle">Board-Certified Dermatologist</div>
+              <div class="hr-handle">Board Certified Dermatologist</div>
             </div>
           </div>
           <div class="hr-quote">"I've been recommending Neutrogena Hydro Boost for years. Would love to create a clinical breakdown series showing hyaluronic acid absorption differences. My audience asks about this weekly."</div>
           <div class="hr-tags">
-            <span class="hr-tag red">Skincare Science</span>
-            <span class="hr-tag lime">Dermatologist</span>
-            <span class="hr-tag blue">Gen Z + Millennial</span>
+            <span class="hr-tag accent">Skincare Science</span>
+            <span class="hr-tag green">Dermatologist</span>
+            <span class="hr-tag accent">Gen Z + Millennial</span>
           </div>
           <div class="hr-stats">
             <div><div class="hr-stat-val">847K</div><div class="hr-stat-lbl">Followers</div></div>
@@ -1080,7 +943,7 @@ body:hover .cursor-glow { opacity: 1; }
       <div class="hr-text">
         <div class="hr-badge">&#9995; Handraise Technology</div>
         <h2>Creators come to you. Already believing in the product.</h2>
-        <p>Traditional outreach yields 3-5% response rates and zero brand affinity signals. #paid's Handraise flips the dynamic: creators see the brief, pitch their concept, and raise their hand only when they genuinely want to partner.</p>
+        <p>Traditional outreach yields 3 to 5% response rates and zero brand affinity signals. #paid's Handraise flips the dynamic: creators see the brief, pitch their concept, and raise their hand only when they genuinely want to partner.</p>
         <ul class="check-list">
           <li><span class="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#8B8E00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Higher content quality from intrinsically motivated creators</li>
           <li><span class="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#8B8E00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Authentic product knowledge built in (no forced scripts)</li>
@@ -1096,37 +959,37 @@ body:hover .cursor-glow { opacity: 1; }
 <section class="use-cases-sec" id="usecases">
   <div class="container">
     <div class="uc-header">
-      <div class="tag blue" style="justify-content:center"><span class="line"></span> Neutrogena Use Cases</div>
-      <div class="sec-title">Always-On Across the Portfolio</div>
-      <div class="sec-desc" style="margin:0 auto">Each sub-brand gets its own creator engine, optimized for seasonal demand and consumer conversation.</div>
+      <div class="tag green" style="justify-content:center"><span class="line"></span> Neutrogena Use Cases</div>
+      <div class="sec-title">Always On Across the Portfolio</div>
+      <div class="sec-desc" style="margin:0 auto">Each sub brand gets its own creator engine, optimized for seasonal demand and consumer conversation.</div>
     </div>
     <div class="uc-grid">
       <div class="uc-card fade-in s1">
         <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=360&fit=crop" alt="Sun">
         <div class="uc-card-body">
-          <h3>Sun Care (SPF) "Year-Round UV Defense"</h3>
-          <p>Dermatologist creators debunking SPF myths, UV camera content showing invisible damage, seasonal ramp-ups for summer travel.</p>
+          <h3>Sun Care (SPF) "Year Round UV Defense"</h3>
+          <p>Dermatologist creators debunking SPF myths, UV camera content showing invisible damage, seasonal ramp ups for summer travel.</p>
         </div>
       </div>
       <div class="uc-card fade-in s2">
         <img src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=600&h=360&fit=crop" alt="Hydration">
         <div class="uc-card-body">
           <h3>Hydro Boost "The Science of Hydration"</h3>
-          <p>Clinical ingredient breakdowns from estheticians, before-and-after hydration meter content, "routine stacking" series.</p>
+          <p>Clinical ingredient breakdowns from estheticians, before and after hydration meter content, "routine stacking" series.</p>
         </div>
       </div>
       <div class="uc-card fade-in s3">
         <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&h=360&fit=crop" alt="Skin">
         <div class="uc-card-body">
           <h3>Acne "Clear Skin, Real Stories"</h3>
-          <p>Long-form journey content documenting real results over 8+ weeks. Derm-monitored protocols building clinical credibility.</p>
+          <p>Long form journey content documenting real results over 8+ weeks. Derm monitored protocols building clinical credibility.</p>
         </div>
       </div>
       <div class="uc-card fade-in s4">
         <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&h=360&fit=crop" alt="Night routine">
         <div class="uc-card-body">
           <h3>Retinol "The Night Shift"</h3>
-          <p>Education-first content on retinol myths, correct usage, realistic timelines. Neutrogena as the trusted expert in anti-aging.</p>
+          <p>Education first content on retinol myths, correct usage, realistic timelines. Neutrogena as the trusted expert in anti aging.</p>
         </div>
       </div>
     </div>
@@ -1137,7 +1000,7 @@ body:hover .cursor-glow { opacity: 1; }
 <div class="quote-break">
   <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1920&h=800&fit=crop" alt="Skincare">
   <div class="quote-inner">
-    <blockquote>"80% of consumers are more willing to buy from brands that work with influencers beyond one-off social posts."</blockquote>
+    <blockquote>"80% of consumers are more willing to buy from brands that work with influencers beyond one off social posts."</blockquote>
     <cite>Sprout Social / Q4 2025 Pulse Survey</cite>
   </div>
 </div>
@@ -1146,25 +1009,25 @@ body:hover .cursor-glow { opacity: 1; }
 <section class="timeline-sec" id="timeline">
   <div class="container">
     <div class="tl-header">
-      <div class="tag red" style="justify-content:center"><span class="line"></span> Implementation Roadmap</div>
-      <div class="sec-title">Kickoff to Always-On in 90 Days</div>
+      <div class="tag accent" style="justify-content:center"><span class="line"></span> Implementation Roadmap</div>
+      <div class="sec-title">Kickoff to Always On in 90 Days</div>
       <div class="sec-desc" style="margin:0 auto">Quick wins while building infrastructure for sustained scale.</div>
     </div>
     <div class="tl">
-      <div class="tl-item"><div class="tl-dot red"></div>
-        <div class="tl-card fade-in"><div class="tl-phase red">Weeks 1-2 / Foundation</div><h3>Creator Strategy + Brief Architecture</h3><p>Define creator tiers, build brand safety guidelines, architect always-on brief templates per product line.</p></div>
+      <div class="tl-item"><div class="tl-dot accent"></div>
+        <div class="tl-card fade-in"><div class="tl-phase accent">Weeks 1 &amp; 2 / Foundation</div><h3>Creator Strategy + Brief Architecture</h3><p>Define creator tiers, build brand safety guidelines, architect always on brief templates per product line.</p></div>
       </div>
-      <div class="tl-item"><div class="tl-dot red"></div>
-        <div class="tl-card fade-in"><div class="tl-phase red">Weeks 3-4 / Launch</div><h3>First Creator Cohort Activation</h3><p>Open Handraising to 50+ pre-vetted skincare creators. First briefs live for Hydro Boost and SPF. Publicis integration.</p></div>
+      <div class="tl-item"><div class="tl-dot accent"></div>
+        <div class="tl-card fade-in"><div class="tl-phase accent">Weeks 3 &amp; 4 / Launch</div><h3>First Creator Cohort Activation</h3><p>Open Handraising to 50+ pre vetted skincare creators. First briefs live for Hydro Boost and SPF. Publicis integration.</p></div>
       </div>
-      <div class="tl-item"><div class="tl-dot blue"></div>
-        <div class="tl-card fade-in"><div class="tl-phase blue">Weeks 5-8 / Amplify</div><h3>Paid Media + Content Licensing</h3><p>Top content enters paid amplification. Whitelisted ads across Meta, TikTok, Pinterest. Content licensing feeds retail media.</p></div>
+      <div class="tl-item"><div class="tl-dot green"></div>
+        <div class="tl-card fade-in"><div class="tl-phase green">Weeks 5 to 8 / Amplify</div><h3>Paid Media + Content Licensing</h3><p>Top content enters paid amplification. Whitelisted ads across Meta, TikTok, Pinterest. Content licensing feeds retail media.</p></div>
       </div>
-      <div class="tl-item"><div class="tl-dot lime"></div>
-        <div class="tl-card fade-in"><div class="tl-phase lime">Weeks 9-12 / Scale</div><h3>Full Always-On Engine Live</h3><p>Automated pipeline across all sub-brands. Dashboards live. Creator retention program launches. Monthly Handraise cadence.</p></div>
+      <div class="tl-item"><div class="tl-dot green"></div>
+        <div class="tl-card fade-in"><div class="tl-phase green">Weeks 9 to 12 / Scale</div><h3>Full Always On Engine Live</h3><p>Automated pipeline across all sub brands. Dashboards live. Creator retention program launches. Monthly Handraise cadence.</p></div>
       </div>
-      <div class="tl-item"><div class="tl-dot lime"></div>
-        <div class="tl-card fade-in"><div class="tl-phase lime">Ongoing / Compound</div><h3>Quarterly Optimization + Expansion</h3><p>Expand to Aveeno, Clean & Clear. Scale to 200+ creators. Commerce integrations. Incrementality studies.</p></div>
+      <div class="tl-item"><div class="tl-dot accent"></div>
+        <div class="tl-card fade-in"><div class="tl-phase accent">Ongoing / Compound</div><h3>Quarterly Optimization + Expansion</h3><p>Expand to Aveeno, Clean &amp; Clear. Scale to 200+ creators. Commerce integrations. Incrementality studies.</p></div>
       </div>
     </div>
   </div>
@@ -1173,15 +1036,15 @@ body:hover .cursor-glow { opacity: 1; }
 <!-- COMPARISON -->
 <section class="compare" id="compare">
   <div class="container">
-    <div class="tag red" style="justify-content:center"><span class="line"></span> The Shift</div>
-    <div class="sec-title" style="color:var(--paid-white); text-align:center">Campaign Bursts vs.<br>Always-On Infrastructure</div>
+    <div class="tag accent" style="justify-content:center"><span class="line"></span> The Shift</div>
+    <div class="sec-title" style="color:var(--paid-white); text-align:center">Campaign Bursts vs.<br>Always On Infrastructure</div>
     <div class="sec-desc" style="color:rgba(255,255,255,0.4); text-align:center; margin:0 auto 3rem">The old model leaves gaps your competitors rush to fill.</div>
     <div class="cmp-grid">
       <div class="cmp-card old fade-in">
         <h3>Traditional Campaign Model</h3>
         <ul class="cmp-list">
-          <li>8-12 week flights with gaps between</li>
-          <li>Manual outreach (3-5% response rate)</li>
+          <li>8 to 12 week flights with gaps between</li>
+          <li>Manual outreach (3 to 5% response rate)</li>
           <li>Content dies when campaign ends</li>
           <li>Disconnected metrics across platforms</li>
           <li>Premium costs for rush timelines</li>
@@ -1191,15 +1054,15 @@ body:hover .cursor-glow { opacity: 1; }
         </ul>
       </div>
       <div class="cmp-card new fade-in">
-        <h3>#paid Always-On Infrastructure</h3>
+        <h3>#paid Always On Infrastructure</h3>
         <ul class="cmp-list">
-          <li>365-day creator engine, always live</li>
-          <li>Handraise brings pre-qualified creators</li>
+          <li>365 day creator engine, always live</li>
+          <li>Handraise brings pre qualified creators</li>
           <li>Content compounds: licensed, amplified</li>
           <li>Unified attribution across platforms</li>
           <li>Predictable cadence, no rush costs</li>
           <li>Own the conversation, every day</li>
-          <li>Long-term relationships deepen trust</li>
+          <li>Long term relationships deepen trust</li>
           <li>Growing library feeds all channels</li>
         </ul>
       </div>
@@ -1211,25 +1074,25 @@ body:hover .cursor-glow { opacity: 1; }
 <section class="roi" id="roi">
   <div class="container">
     <div class="roi-header">
-      <div class="tag lime" style="justify-content:center"><span class="line"></span> Projected Impact</div>
+      <div class="tag accent" style="justify-content:center"><span class="line"></span> Projected Impact</div>
       <div class="sec-title">The Business Case</div>
       <div class="sec-desc" style="margin:0 auto">Based on #paid CPG skincare benchmarks and Kenvue's own digital performance data.</div>
     </div>
     <div class="roi-grid">
       <div class="roi-card fade-in s1">
-        <div class="roi-num red">3.2x</div>
+        <div class="roi-num accent">3.2x</div>
         <h3>Return on Creator Spend</h3>
-        <p>Average ROAS for always-on CPG programs, blending organic reach with paid amplification.</p>
+        <p>Average ROAS for always on CPG programs, blending organic reach with paid amplification.</p>
       </div>
       <div class="roi-card fade-in s2">
-        <div class="roi-num blue">62%</div>
+        <div class="roi-num green">62%</div>
         <h3>Lower Cost Per Engagement</h3>
         <p>Creator content outperforms brand studio on CPE, with longer shelf life and higher save rates.</p>
       </div>
       <div class="roi-card fade-in s3">
-        <div class="roi-num lime">+40%</div>
+        <div class="roi-num accent">+40%</div>
         <h3>Content Volume Increase</h3>
-        <p>Always-on produces 3-5x more content per quarter than campaign bursts, feeding every channel.</p>
+        <p>Always on produces 3 to 5x more content per quarter than campaign bursts, feeding every channel.</p>
       </div>
     </div>
   </div>
@@ -1238,15 +1101,15 @@ body:hover .cursor-glow { opacity: 1; }
 <!-- CTA -->
 <section class="final-cta" id="cta">
   <div class="container">
-    <h2>Ready to make <span class="red">Neutrogena</span><br>impossible to ignore?</h2>
+    <h2>Ready to make <span class="accent">Neutrogena</span><br>impossible to ignore?</h2>
     <p>The skincare conversation happens every day. Let's build the infrastructure that keeps Neutrogena at the center of it.</p>
     <div class="cta-btns">
-      <a href="mailto:adam@hashtagpaid.com?subject=Kenvue%20x%20%23paid%20%E2%80%94%20Always-On%20Creator%20Infrastructure&body=Let's%20schedule%20a%20deeper%20dive%20on%20the%20Neutrogena%20always-on%20creator%20strategy." class="btn btn-red">Schedule a Deep Dive &rarr;</a>
+      <a href="mailto:adam@hashtagpaid.com?subject=Kenvue%20x%20%23paid%20%E2%80%94%20Always-On%20Creator%20Infrastructure&body=Let's%20schedule%20a%20deeper%20dive%20on%20the%20Neutrogena%20always-on%20creator%20strategy." class="btn btn-accent">Schedule a Deep Dive &rarr;</a>
       <a href="#" class="btn btn-outline" onclick="window.print(); return false;">Download as PDF</a>
     </div>
     <div class="cta-sig">
       <p class="name">Adam Rivietz</p>
-      <p class="role">Co-Founder & CSO, #paid</p>
+      <p class="role">Co-Founder &amp; CSO, #paid</p>
       <p class="email">adam@hashtagpaid.com</p>
     </div>
   </div>
@@ -1260,44 +1123,17 @@ body:hover .cursor-glow { opacity: 1; }
 </footer>
 
 <script>
-// ═══════════════════════════════════════
-// INTERACTIVE ENGINE
-// ═══════════════════════════════════════
-
-// 1. Scroll-triggered fade-in
 const obs = new IntersectionObserver(e => {
   e.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 
-// 2. Nav scroll + active section tracking
-const nav = document.getElementById('nav');
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-const progressBar = document.getElementById('progressBar');
-
+document.getElementById('nav').addEventListener('scroll', null);
 window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-
-  // Nav shrink
-  nav.classList.toggle('scrolled', scrollY > 50);
-
-  // Progress bar
-  progressBar.style.width = (scrollY / docHeight * 100) + '%';
-
-  // Active section highlighting
-  let current = '';
-  sections.forEach(sec => {
-    if (scrollY >= sec.offsetTop - 200) current = sec.id;
-  });
-  navLinks.forEach(a => {
-    a.classList.remove('active');
-    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
-  });
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
 });
 
-// 3. Smooth scroll
+
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const t = document.querySelector(a.getAttribute('href'));
@@ -1305,55 +1141,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
-// 4. Cursor glow follower
-const glow = document.getElementById('cursorGlow');
-let mouseX = 0, mouseY = 0, glowX = 0, glowY = 0;
-document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
-function updateGlow() {
-  glowX += (mouseX - glowX) * 0.08;
-  glowY += (mouseY - glowY) * 0.08;
-  glow.style.left = glowX + 'px';
-  glow.style.top = glowY + 'px';
-  requestAnimationFrame(updateGlow);
-}
-updateGlow();
-
-// 5. Button hover light effect
-document.querySelectorAll('.btn').forEach(btn => {
-  btn.addEventListener('mousemove', e => {
-    const rect = btn.getBoundingClientRect();
-    btn.style.setProperty('--x', ((e.clientX - rect.left) / rect.width * 100) + '%');
-    btn.style.setProperty('--y', ((e.clientY - rect.top) / rect.height * 100) + '%');
-  });
-});
-
-// 6. 3D tilt effect on cards
-document.querySelectorAll('.p-card, .uc-card, .roi-card, .stat').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const rect = card.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    card.style.transform = `perspective(600px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) translateY(-4px)`;
-  });
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = '';
-  });
-});
-
-// 7. Animated chart bars on scroll
-const chartObs = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.querySelectorAll('.bar').forEach(bar => {
-        setTimeout(() => bar.classList.add('animate'), 200);
-      });
-      chartObs.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.4 });
-document.querySelectorAll('.chart-box').forEach(el => chartObs.observe(el));
-
-// 8. Number counter animation
+// Counter animation
 document.querySelectorAll('.stat-num, .roi-num').forEach(el => {
   const text = el.textContent;
   const m = text.match(/([\d.]+)/);
@@ -1365,108 +1153,16 @@ document.querySelectorAll('.stat-num, .roi-num').forEach(el => {
   const o = new IntersectionObserver(e => {
     e.forEach(entry => {
       if (entry.isIntersecting) {
-        const start = performance.now();
-        const duration = 1800;
-        function step(now) {
-          const progress = Math.min((now - start) / duration, 1);
-          // Ease out cubic
-          const eased = 1 - Math.pow(1 - progress, 3);
-          const current = target * eased;
-          el.textContent = pre + (dec ? current.toFixed(1) : Math.round(current)) + suf;
-          if (progress < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
+        let c = 0; const steps = 50; const inc = target / steps;
+        const t = setInterval(() => {
+          c += inc; if (c >= target) { c = target; clearInterval(t); }
+          el.textContent = pre + (dec ? c.toFixed(1) : Math.round(c)) + suf;
+        }, 1600 / steps);
         o.unobserve(el);
       }
     });
   }, { threshold: 0.5 });
   o.observe(el);
-});
-
-// 9. Particle canvas in hero
-(function initParticles() {
-  const canvas = document.getElementById('particles');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  let w, h, particles = [];
-
-  function resize() {
-    const hero = canvas.parentElement;
-    w = canvas.width = hero.offsetWidth;
-    h = canvas.height = hero.offsetHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  class Particle {
-    constructor() { this.reset(); }
-    reset() {
-      this.x = Math.random() * w;
-      this.y = Math.random() * h;
-      this.vx = (Math.random() - 0.5) * 0.3;
-      this.vy = (Math.random() - 0.5) * 0.3;
-      this.r = Math.random() * 1.5 + 0.5;
-      this.alpha = Math.random() * 0.3 + 0.05;
-    }
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
-      if (this.x < 0 || this.x > w || this.y < 0 || this.y > h) this.reset();
-    }
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,73,44,${this.alpha})`;
-      ctx.fill();
-    }
-  }
-
-  for (let i = 0; i < 60; i++) particles.push(new Particle());
-
-  function animate() {
-    ctx.clearRect(0, 0, w, h);
-    particles.forEach(p => { p.update(); p.draw(); });
-
-    // Connect nearby particles
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 120) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(255,73,44,${0.03 * (1 - dist / 120)})`;
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(animate);
-  }
-  animate();
-})();
-
-// 10. Parallax on quote breaks
-window.addEventListener('scroll', () => {
-  document.querySelectorAll('.quote-break img').forEach(img => {
-    const rect = img.parentElement.getBoundingClientRect();
-    const speed = 0.15;
-    const yPos = (rect.top * speed);
-    img.style.transform = `translateY(${yPos}px) scale(1.1)`;
-  });
-});
-
-// 11. Hover reveal on pillar cards
-document.querySelectorAll('.pillar').forEach(p => p.classList.add('hover-reveal'));
-
-// 12. Image lazy loading with fade
-document.querySelectorAll('img[src*="unsplash"]').forEach(img => {
-  img.style.opacity = '0';
-  img.style.transition = 'opacity 0.6s ease';
-  if (img.complete) { img.style.opacity = '1'; }
-  else { img.addEventListener('load', () => { img.style.opacity = '1'; }); }
 });
 </script>
 
