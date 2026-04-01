@@ -161,24 +161,19 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(0,0,0,0.96); }
 .btn-outline:hover { border-color: rgba(255,255,255,0.5); transform: translateY(-2px); }
 
 /* ══════ ANIMATIONS ══════ */
-.fade-in { opacity: 0; transform: translateY(32px); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
+.fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.4s ease, transform 0.4s ease; }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
-.fade-in-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
+.fade-in-left { opacity: 0; transform: translateX(-16px); transition: opacity 0.4s ease, transform 0.4s ease; }
 .fade-in-left.visible { opacity: 1; transform: translateX(0); }
-.fade-in-right { opacity: 0; transform: translateX(40px); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
+.fade-in-right { opacity: 0; transform: translateX(16px); transition: opacity 0.4s ease, transform 0.4s ease; }
 .fade-in-right.visible { opacity: 1; transform: translateX(0); }
-.scale-in { opacity: 0; transform: scale(0.92); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
+.scale-in { opacity: 0; transform: scale(0.98); transition: opacity 0.4s ease, transform 0.4s ease; }
 .scale-in.visible { opacity: 1; transform: scale(1); }
 .s1 { transition-delay: 0.08s; } .s2 { transition-delay: 0.16s; }
 .s3 { transition-delay: 0.24s; } .s4 { transition-delay: 0.32s; }
 .s5 { transition-delay: 0.4s; }
-.reveal-word { display: inline-block; opacity: 0; transform: translateY(20px); transition: opacity 0.5s var(--ease), transform 0.5s var(--ease); }
+.reveal-word { display: inline-block; opacity: 0; transform: translateY(8px); transition: opacity 0.3s ease, transform 0.3s ease; }
 .reveal-word.visible { opacity: 1; transform: translateY(0); }
-
-/* ══════ TILT ══════ */
-.tilt-card { transform-style: preserve-3d; will-change: transform; transition: box-shadow 0.3s var(--ease); }
-.tilt-card:hover { box-shadow: 0 20px 60px rgba(0,0,0,0.08); }
-.tilt-card-dark:hover { box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
 
 /* ══════ WAVE ══════ */
 .wave-divider { width: 100%; line-height: 0; overflow: hidden; }
@@ -426,7 +421,6 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(0,0,0,0.96); }
 .quote-break-bg {
   position: absolute; inset: 0;
   background-size: cover; background-position: center;
-  background-attachment: fixed;
   filter: brightness(0.2) saturate(1.3);
 }
 .quote-inner {
@@ -1349,7 +1343,7 @@ function initReveal() {
   });
   h1.innerHTML = result;
   const words = h1.querySelectorAll('.reveal-word');
-  words.forEach((w, i) => setTimeout(() => w.classList.add('visible'), 100 + i * 70));
+  words.forEach((w, i) => setTimeout(() => w.classList.add('visible'), 40 + i * 24));
 }
 
 // FLOW NODES
@@ -1359,31 +1353,6 @@ function animateFlowNodes() {
     if (node) setTimeout(() => node.classList.add('visible'), 300 + i * 200);
   });
 }
-
-// 3D TILT
-document.querySelectorAll('.tilt-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    const x = e.clientX - r.left, y = e.clientY - r.top;
-    const rx = (y - r.height / 2) / (r.height / 2) * -4;
-    const ry = (x - r.width / 2) / (r.width / 2) * 4;
-    card.style.transform = `perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
-  });
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = 'perspective(600px) rotateX(0) rotateY(0) translateY(0)';
-  });
-});
-
-// MAGNETIC BUTTONS
-document.querySelectorAll('.magnetic-btn').forEach(btn => {
-  btn.addEventListener('mousemove', e => {
-    const r = btn.getBoundingClientRect();
-    const x = e.clientX - r.left - r.width / 2;
-    const y = e.clientY - r.top - r.height / 2;
-    btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
-  });
-  btn.addEventListener('mouseleave', () => { btn.style.transform = 'translate(0, 0)'; });
-});
 
 // COUNTERS
 const counterObs = new IntersectionObserver(entries => {
@@ -1441,6 +1410,17 @@ document.addEventListener('keydown', e => {
     navSecs[n].scrollIntoView({ behavior: 'smooth' });
   }
 });
+
+// REDUCED MOTION FALLBACK
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .scale-in, .reveal-word').forEach(el => {
+    el.classList.add('visible');
+    el.style.transition = 'none';
+    el.style.transform = 'none';
+    el.style.opacity = '1';
+  });
+}
+
 </script>
 </body>
 </html>
