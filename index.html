@@ -41,11 +41,10 @@ body {
   background: var(--paid-cream);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  cursor: none;
 }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 img { max-width: 100%; display: block; }
-a, button { cursor: none; }
+a, button { cursor: pointer; }
 
 /* ══════ LOADER ══════ */
 .loader {
@@ -81,30 +80,6 @@ a, button { cursor: none; }
 @keyframes loaderFadeIn { to { opacity: 1; } }
 @keyframes loaderFill { to { width: 100%; } }
 
-/* ══════ CURSOR ══════ */
-.cursor-dot {
-  position: fixed; top: 0; left: 0; z-index: 10000;
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--paid-accent);
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  mix-blend-mode: difference;
-}
-.cursor-ring {
-  position: fixed; top: 0; left: 0; z-index: 9999;
-  width: 36px; height: 36px; border-radius: 50%;
-  border: 1.5px solid rgba(221,224,65,0.35);
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  transition: width 0.3s var(--ease), height 0.3s var(--ease), border-color 0.3s;
-}
-.cursor-ring.hovering {
-  width: 56px; height: 56px;
-  border-color: var(--paid-accent);
-  background: rgba(221,224,65,0.05);
-}
-@media (max-width: 768px) { .cursor-dot, .cursor-ring { display: none; } body { cursor: auto; } a, button { cursor: pointer; } }
-
 /* ══════ SCROLL PROGRESS ══════ */
 .scroll-progress {
   position: fixed; top: 0; left: 0; z-index: 200;
@@ -123,7 +98,7 @@ a, button { cursor: none; }
   border: 1.5px solid rgba(0,0,0,0.2);
   background: transparent;
   transition: all 0.3s var(--ease);
-  cursor: none; position: relative;
+  cursor: pointer; position: relative;
 }
 .side-nav-dot.active {
   background: var(--paid-accent);
@@ -212,7 +187,7 @@ nav.scrolled { padding: 0.6rem 2rem; background: rgba(0,0,0,0.96); }
   padding: 0.95rem 2.25rem; border-radius: 100px;
   font-family: var(--font-main); font-size: 0.95rem; font-weight: 600;
   text-decoration: none; transition: all 0.3s var(--ease);
-  cursor: none; border: none; position: relative;
+  cursor: pointer; border: none; position: relative;
 }
 .btn-accent { background: var(--paid-accent); color: var(--paid-black); }
 .btn-accent:hover { background: var(--paid-accent-light); box-shadow: 0 8px 32px rgba(221,224,65,0.35); transform: translateY(-2px); }
@@ -777,8 +752,6 @@ footer a:hover { color: var(--paid-accent); }
 </div>
 
 <!-- CURSOR -->
-<div class="cursor-dot" id="cursorDot"></div>
-<div class="cursor-ring" id="cursorRing"></div>
 
 <!-- SCROLL PROGRESS -->
 <div class="scroll-progress" id="scrollProgress"></div>
@@ -1346,25 +1319,6 @@ window.addEventListener('load', () => {
   }, 2400);
 });
 document.body.style.overflow = 'hidden';
-
-// CURSOR
-const dot = document.getElementById('cursorDot');
-const ring = document.getElementById('cursorRing');
-let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
-document.addEventListener('mousemove', e => {
-  mouseX = e.clientX; mouseY = e.clientY;
-  dot.style.left = mouseX + 'px'; dot.style.top = mouseY + 'px';
-});
-function animateRing() {
-  ringX += (mouseX - ringX) * 0.15; ringY += (mouseY - ringY) * 0.15;
-  ring.style.left = ringX + 'px'; ring.style.top = ringY + 'px';
-  requestAnimationFrame(animateRing);
-}
-animateRing();
-document.querySelectorAll('a, button, .btn, .magnetic-btn, .case-card, .model-step, .heard-card, .fund-card, .why-card, .roi-card, .stat, .cmp-card, .side-nav-dot, .int-box, .predict-card, .shift-step').forEach(el => {
-  el.addEventListener('mouseenter', () => ring.classList.add('hovering'));
-  el.addEventListener('mouseleave', () => ring.classList.remove('hovering'));
-});
 
 // SCROLL PROGRESS
 const scrollBar = document.getElementById('scrollProgress');
